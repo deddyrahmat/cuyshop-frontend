@@ -12,7 +12,7 @@
     "test": "vitest",
     "prepare": "husky"
   },
-  "staged": {
+  "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
       "npm run lint"
     ]
