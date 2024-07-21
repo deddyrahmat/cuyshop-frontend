@@ -28,10 +28,10 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
-  overrides: [
-    {
-      extends: ['plugin:@typescript-eslint/disable-type-checked'],
-      files: ['./**/*.ts', './**/*.tsx'],
-    },
-  ],
+  // overrides: [
+  //   {
+  //     extends: ['plugin:@typescript-eslint/disable-type-checked'],
+  //     files: ['./**/*.ts', './**/*.tsx'],
+  //   },
+  // ],
 };
