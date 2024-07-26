@@ -8,15 +8,17 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="mb-3">
-      <nav className="flex justify-between items-center py-5 px-8 bg-green-700">
-        <div className="bg-gray-200 p-3 rounded-lg">
-          <img src="./image/logo/logo.png" alt="logo" className="h-4 w-4" />
-        </div>
-        <FormSearch classNames="hidden md:flex" />
-        <div className="ml-3 flex justify-center items-center gap-1 bg-white  rounded-lg py-2 px-3">
-          <FaShoppingCart className="text-green-700 text-2xl" />
-          <span className="text-md">3</span>
-        </div>
+      <nav className=" bg-green-700 ">
+        <section className="2xl:container 2xl:mx-auto flex justify-between items-center py-5 px-8 2xl:px-1">
+          <section className="bg-gray-200 p-3 rounded-lg">
+            <img src="./image/logo/logo.png" alt="logo" className="h-4 w-4" />
+          </section>
+          <FormSearch classNames="hidden md:flex" />
+          <section className="ml-3 flex justify-center items-center gap-1 bg-white  rounded-lg py-2 px-3">
+            <FaShoppingCart className="text-green-700 text-2xl" />
+            <span className="text-md">3</span>
+          </section>
+        </section>
       </nav>
 
       {/* VERSION MOBILE */}
@@ -85,8 +87,8 @@ function Header() {
       </nav>
 
       {/* VERSION TABLET UP */}
-      <nav className="hidden md:flex justify-between items-center py-5 px-8 bg-white">
-        <div>
+      <nav className=" bg-white">
+        <section className="2xl:container 2xl:mx-auto hidden md:flex md:justify-between md:items-center py-5 px-8 2xl:px-1">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a
@@ -122,9 +124,7 @@ function Header() {
               </a>
             </li>
           </ul>
-        </div>
 
-        <div>
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a
@@ -143,7 +143,7 @@ function Header() {
               </a>
             </li>
           </ul>
-        </div>
+        </section>
       </nav>
     </header>
   );

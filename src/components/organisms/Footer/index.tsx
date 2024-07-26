@@ -2,8 +2,8 @@ import { FaClock, FaCopyright } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="py-5 px-8 bg-white mt-8">
-      <section className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
+    <footer className="py-5 px-8 bg-white mt-8 ">
+      <section className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 2xl:container 2xl:mx-auto py-5 px-8 2xl:px-1">
         <article className=" w-full">
           <h2 className="text-lg lg:text-xl font-bold">Alamat</h2>
           <hr className="mt-2 mb-3 border-2 border-gray-300" />
@@ -53,8 +53,8 @@ function Footer() {
           </div>
         </article>
       </section>
-      <hr className="border-2 border-gray-200 mt-5 mb-3" />
-      <section className="flex items-center justify-center gap-2">
+      <hr className="border-2 border-gray-200 mt-5 mb-3 2xl:container 2xl:mx-auto px-8 2xl:px-1" />
+      <section className="flex items-center justify-center gap-2 2xl:container 2xl:mx-auto px-8 2xl:px-1">
         <p>
           <FaCopyright />
         </p>
