@@ -2,7 +2,7 @@ function Card() {
   return (
     <>
       <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
+        <a href="/product/2">
           <img
             className="p-8 rounded-t-lg mx-auto"
             src="./dummy/black.png"
@@ -22,12 +22,6 @@ function Card() {
             <span className="text:sm lg:text-lg font-bold text-gray-500 dark:text-white">
               $599
             </span>
-            {/* <a
-              href="#"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Add to cart
-            </a> */}
           </div>
         </div>
       </div>

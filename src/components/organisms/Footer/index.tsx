@@ -15,21 +15,21 @@ function Footer() {
           <section className="grid grid-cols-3 gap-4 ">
             <div>
               <img
-                src="./image/payments/BCA.png"
+                src="/image/payments/BCA.png"
                 alt="BCA"
                 className="w-32 lg:w-20 object-contain "
               />
             </div>
             <div>
               <img
-                src="./image/payments/BNI.png"
+                src="/image/payments/BNI.png"
                 alt="BNI"
                 className="w-32 lg:w-20 object-contain "
               />
             </div>
             <div>
               <img
-                src="./image/payments/BRI.png"
+                src="/image/payments/BRI.png"
                 alt="BRI"
                 className="w-32 lg:w-20 object-contain "
               />

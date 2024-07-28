@@ -11,7 +11,7 @@ function Header() {
       <nav className=" bg-green-700 ">
         <section className="2xl:container 2xl:mx-auto flex justify-between items-center py-5 px-8 2xl:px-1">
           <section className="bg-gray-200 p-3 rounded-lg">
-            <img src="./image/logo/logo.png" alt="logo" className="h-4 w-4" />
+            <img src="/image/logo/logo.png" alt="logo" className="h-4 w-4" />
           </section>
           <FormSearch classNames="hidden md:flex" />
           <section className="ml-3 flex justify-center items-center gap-1 bg-white  rounded-lg py-2 px-3">
@@ -92,7 +92,7 @@ function Header() {
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a
-                href="#"
+                href="/"
                 className="block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-green-700 md:p-0 dark:text-white md:dark:text-green-500"
                 aria-current="page"
               >
