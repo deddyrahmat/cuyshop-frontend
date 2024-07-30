@@ -87,12 +87,6 @@ function Detail() {
 
         <section className="mt-4 relative p-0 m-0">
           <Swiper
-            style={{
-              "--swiper-navigation-color": "#fff",
-              "--swiper-navigation-size": "20px",
-              "--swiper-pagination-color": "#fff",
-            }}
-            lazy={true}
             slidesPerView={3}
             spaceBetween={30}
             loop={false}
@@ -111,7 +105,6 @@ function Detail() {
                         setListPhotoIndex(indexItem);
                       }}
                       className="p-1 mx-auto"
-                      loading="lazy"
                       src={item.image}
                       alt="product image"
                     />
