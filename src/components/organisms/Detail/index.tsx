@@ -39,8 +39,9 @@ function Detail() {
   const [listPhotoIndex, setListPhotoIndex] = useState<number>(0);
 
   useEffect(() => {
+    console.log("dataImage", dataImage);
     setItems(dataImage);
-  }, []);
+  }, [dataImage]);
 
   // Fungsi untuk membuka modal
   const openModal = (indexImage: number) => {
@@ -80,7 +81,7 @@ function Detail() {
             openModal(listPhotoIndex);
           }}
           className="p-8 rounded-t-lg mx-auto cursor-pointer h-full max-h-64 md:max-h-80"
-          src={items[listPhotoIndex].image}
+          src={items[listPhotoIndex]?.image}
           alt="product image"
         />
 

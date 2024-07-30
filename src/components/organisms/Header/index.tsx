@@ -3,9 +3,11 @@ import Drawer from "../../molecules/Drawer";
 import FormSearch from "../../molecules/FormSearch";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <header className="mb-3">
       <nav className=" bg-green-700 ">
@@ -14,7 +16,10 @@ function Header() {
             <img src="/image/logo/logo.png" alt="logo" className="h-4 w-4" />
           </section>
           <FormSearch classNames="hidden md:flex" />
-          <section className="ml-3 flex justify-center items-center gap-1 bg-white  rounded-lg py-2 px-3">
+          <section
+            className="ml-3 flex justify-center items-center gap-1 bg-white  rounded-lg py-2 px-3 cursor-pointer"
+            onClick={() => navigate("/cart")}
+          >
             <FaShoppingCart className="text-green-700 text-2xl" />
             <span className="text-md">3</span>
           </section>

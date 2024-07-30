@@ -1,4 +1,4 @@
-import Input from "../../atoms/Input";
+import Input from "../../atoms/Inputs";
 
 function FormInput() {
   return (
