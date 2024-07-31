@@ -8,6 +8,8 @@ import Home from "../pages/Home";
 import Product from "../pages/Product";
 import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +41,22 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading type="xl" />}>
         <Product />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <Suspense fallback={<Loading type="xl" />}>
+        <Login />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <Suspense fallback={<Loading type="xl" />}>
+        <Register />
       </Suspense>
     ),
   },
