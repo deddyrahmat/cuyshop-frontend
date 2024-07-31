@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
 import Product from "../pages/Product";
 import Cart from "../pages/Cart";
+import Orders from "../pages/Orders";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading type="xl" />}>
         <Cart />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/orders",
+    element: (
+      <Suspense fallback={<Loading type="xl" />}>
+        <Orders />
       </Suspense>
     ),
   },

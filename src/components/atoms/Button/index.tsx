@@ -13,10 +13,10 @@ interface ButtonProps {
 
 const buttonStyles = {
   primary:
-    "bg-primary hover:bg-primary-600 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-white font-semibold xxl:font-bold text-sm xxl:text-base",
+    "bg-green-800 hover:bg-green-600 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-white font-semibold xxl:font-bold text-sm xxl:text-base",
   danger:
-    "bg-danger hover:bg-danger-600 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-white font-semibold xxl:font-bold text-sm xxl:text-base",
-  gray: "bg-gray-600 hover:bg-gray py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-white font-semibold xxl:font-bold text-sm xxl:text-base",
+    "bg-red-800 hover:bg-red-600 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-white font-semibold xxl:font-bold text-sm xxl:text-base",
+  gray: "bg-gray-600 hover:bg-green-600 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-white font-semibold xxl:font-bold text-sm xxl:text-base",
   disabled:
     "bg-gray-400 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-gray-200 font-semibold xxl:font-bold text-sm xxl:text-base",
 };

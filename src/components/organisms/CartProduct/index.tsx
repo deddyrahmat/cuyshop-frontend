@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import FormField from "../../molecules/FormField";
 import Button from "../../atoms/Button";
 import FormCustomSelect from "../../molecules/FormCustomSelect";
+import Swal from "sweetalert2";
 
 function CartProduct() {
   const formik = useFormik({
@@ -24,6 +25,11 @@ function CartProduct() {
     }),
     onSubmit: (values: any) => {
       console.log("values", values);
+      Swal.fire({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success",
+      });
     },
   });
 
