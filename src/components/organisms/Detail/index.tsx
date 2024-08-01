@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Lightbox from "react-18-image-lightbox";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -15,23 +15,26 @@ function Detail() {
     image: string;
   }
 
-  const dataImage: ImageItem[] = [
-    {
-      image: "/dummy/black.png",
-    },
-    {
-      image: "/dummy/green.png",
-    },
-    {
-      image: "/dummy/red.png",
-    },
-    {
-      image: "/dummy/white-red.png",
-    },
-    {
-      image: "/dummy/white.png",
-    },
-  ];
+  const dataImage = useMemo(
+    () => [
+      {
+        image: "/dummy/black.png",
+      },
+      {
+        image: "/dummy/green.png",
+      },
+      {
+        image: "/dummy/red.png",
+      },
+      {
+        image: "/dummy/white-red.png",
+      },
+      {
+        image: "/dummy/white.png",
+      },
+    ],
+    []
+  );
 
   const [items, setItems] = useState<ImageItem[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
