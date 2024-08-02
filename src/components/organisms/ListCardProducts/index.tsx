@@ -63,8 +63,6 @@ function ListCardProducts() {
     listProducts(currentPage);
   }, [currentPage]);
 
-  console.log("dataProducts", dataProducts);
-
   return (
     <section className="2xl:container 2xl:mx-auto py-5 px-8 2xl:px-1">
       <section className="flex lg:items-end flex-col lg:flex-row gap-2 mb-5">

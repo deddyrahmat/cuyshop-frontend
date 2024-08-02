@@ -13,6 +13,7 @@ interface ProductImage {
 interface Product {
   id: number;
   title: string;
+  slug: string;
   description: string;
   price: string;
   product_images: ProductImage[];
@@ -33,7 +34,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
 
   return (
     <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <a href={`/product/${product.id}`}>
+      <a href={`/product/${product.slug}`}>
         <img
           className="p-8 rounded-t-lg mx-auto"
           src={imageUrl}
@@ -41,7 +42,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
         />
       </a>
       <div className="px-5 pb-5">
-        <a href={`/product/${product.id}`}>
+        <a href={`/product/${product.slug}`}>
           <h5 className="line-clamp-2 text-md md:text-lg lg:text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {product.title}
           </h5>
