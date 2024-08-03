@@ -2,11 +2,21 @@ import React from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormField from "../../molecules/FormField";
 import Button from "../../atoms/Button";
+import { handleLogin } from "../../../services/auth";
+import { useAppDispatch } from "../../../redux/hooks";
+import { USER_LOGIN } from "../../../redux/authSlice";
 
-const AuthRegister: React.FC = () => {
+interface ValuesLogin {
+  email: string;
+  password: string;
+}
+
+const AuthLogin: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -20,9 +30,15 @@ const AuthRegister: React.FC = () => {
         .min(6, "Minimum 6 characters")
         .required("Please input the field"),
     }),
-    onSubmit: (values: any) => {
+    onSubmit: async (values: ValuesLogin) => {
       console.log("values", values);
-      toast.success("process.message");
+      const process = await handleLogin(values);
+      if (!process.status) {
+        toast.error(process.message);
+      }
+      dispatch(USER_LOGIN(process.data.data));
+      toast.success(process.message);
+      navigate("/", { replace: true });
     },
   });
   return (
@@ -100,4 +116,4 @@ const AuthRegister: React.FC = () => {
   );
 };
 
-export default AuthRegister;
+export default AuthLogin;

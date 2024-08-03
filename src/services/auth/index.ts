@@ -9,6 +9,7 @@ interface RegisterValues {
   name: string;
   email: string;
   password: string;
+  password_confirmation: string;
 }
 export const handleLogin = async ({ email, password }: LoginValues) => {
   try {
@@ -38,6 +39,7 @@ export const handleRegister = async ({
   name,
   email,
   password,
+  password_confirmation,
 }: RegisterValues) => {
   try {
     const config = {
@@ -45,7 +47,12 @@ export const handleRegister = async ({
         "content-type": "application/json",
       },
     };
-    const body = JSON.stringify({ name, email, password });
+    const body = JSON.stringify({
+      name,
+      email,
+      password,
+      password_confirmation,
+    });
     const response = await ApiAuth.Register(body, config);
     return {
       status: true,
