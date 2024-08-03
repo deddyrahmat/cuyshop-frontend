@@ -1,8 +1,9 @@
+import React from "react";
 import Footer from "../components/organisms/Footer";
 import Header from "../components/organisms/Header";
 import OrderContent from "../components/organisms/OrderContent";
 
-function Orders() {
+const Orders: React.FC = () => {
   return (
     <>
       <Header />
@@ -10,6 +11,6 @@ function Orders() {
       <Footer />
     </>
   );
-}
+};
 
 export default Orders;

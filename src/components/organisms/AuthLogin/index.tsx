@@ -1,3 +1,4 @@
+import React from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
@@ -5,7 +6,7 @@ import { Link } from "react-router-dom";
 import FormField from "../../molecules/FormField";
 import Button from "../../atoms/Button";
 
-function AuthRegister() {
+const AuthRegister: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -97,6 +98,6 @@ function AuthRegister() {
       </section>
     </section>
   );
-}
+};
 
 export default AuthRegister;

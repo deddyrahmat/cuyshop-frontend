@@ -1,3 +1,4 @@
+import React from "react";
 import { IoBagCheckOutline } from "react-icons/io5";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -13,7 +14,7 @@ import Button from "../../atoms/Button";
 import FormCustomSelect from "../../molecules/FormCustomSelect";
 import Swal from "sweetalert2";
 
-function CartProduct() {
+const CartProduct: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       fullname: "",
@@ -112,6 +113,6 @@ function CartProduct() {
       </section>
     </section>
   );
-}
+};
 
 export default CartProduct;

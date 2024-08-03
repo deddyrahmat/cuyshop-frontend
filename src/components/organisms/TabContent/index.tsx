@@ -16,7 +16,7 @@ const TabContent: React.FC<TabContentProps> = ({ activeTab, data }) => {
 
   return (
     <section className="mt-8">
-      {tabComponents[activeTab] || <section>Content not available</section>}
+      {tabComponents[activeTab] ?? <section>Content not available</section>}
     </section>
   );
 };

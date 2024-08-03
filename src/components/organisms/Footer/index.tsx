@@ -1,6 +1,7 @@
+import React from "react";
 import { FaClock, FaCopyright } from "react-icons/fa";
 
-function Footer() {
+const Footer: React.FC = () => {
   return (
     <footer className="py-5 px-8 bg-white mt-8 ">
       <section className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 2xl:container 2xl:mx-auto py-5 px-8 2xl:px-1">
@@ -63,6 +64,6 @@ function Footer() {
       </section>
     </footer>
   );
-}
+};
 
 export default Footer;

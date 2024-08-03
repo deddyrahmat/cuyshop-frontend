@@ -1,10 +1,15 @@
+import React from "react";
 interface TypeProgress {
   type: "sm" | "lg" | "xl" | "auto";
   withText?: boolean;
   value: number;
 }
 
-function ProgressBar({ type, withText = false, value }: TypeProgress) {
+const ProgressBar: React.FC<TypeProgress> = ({
+  type,
+  withText = false,
+  value,
+}) => {
   let size = "";
   let text = "";
   if (type === "auto") {
@@ -43,6 +48,6 @@ function ProgressBar({ type, withText = false, value }: TypeProgress) {
       </section>
     </div>
   );
-}
+};
 
 export default ProgressBar;

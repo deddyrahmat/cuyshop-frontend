@@ -1,10 +1,15 @@
+import React from "react";
 interface TypeLoading {
   type: "sm" | "lg" | "xl" | "auto";
   bg?: string;
   withText?: boolean;
 }
 
-function Loading({ type, bg = "bg-white", withText = false }: TypeLoading) {
+const Loading: React.FC<TypeLoading> = ({
+  type,
+  bg = "bg-white",
+  withText = false,
+}) => {
   let background = "";
   if (bg === "transparent") {
     background = "transparent";
@@ -54,6 +59,6 @@ function Loading({ type, bg = "bg-white", withText = false }: TypeLoading) {
       </div>
     </div>
   );
-}
+};
 
 export default Loading;

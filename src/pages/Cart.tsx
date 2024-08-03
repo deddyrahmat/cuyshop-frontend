@@ -1,8 +1,9 @@
+import React from "react";
 import CartProduct from "../components/organisms/CartProduct";
 import Footer from "../components/organisms/Footer";
 import Header from "../components/organisms/Header";
 
-function Cart() {
+const Cart: React.FC = () => {
   return (
     <>
       <Header />
@@ -10,6 +11,6 @@ function Cart() {
       <Footer />
     </>
   );
-}
+};
 
 export default Cart;

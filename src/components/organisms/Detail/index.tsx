@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import Lightbox from "react-18-image-lightbox";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -43,7 +44,7 @@ interface Product {
   product_images: ImageItem[];
 }
 
-function Detail() {
+const Detail: React.FC = () => {
   const params = useParams();
 
   const [product, setProduct] = useState<Product | null>(null);
@@ -199,6 +200,6 @@ function Detail() {
       )}
     </section>
   );
-}
+};
 
 export default Detail;

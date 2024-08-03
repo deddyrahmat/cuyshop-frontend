@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Drawer from "../../molecules/Drawer";
 import FormSearch from "../../molecules/FormSearch";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 
-function Header() {
+const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   return (
@@ -168,6 +168,6 @@ function Header() {
       </nav>
     </header>
   );
-}
+};
 
 export default Header;

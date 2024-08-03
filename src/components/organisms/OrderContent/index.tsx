@@ -1,13 +1,13 @@
+import React, { useState } from "react";
 import TabContent from "../TabContent";
 import Tab from "../../molecules/Tab";
-import { useState } from "react";
 
 const PendingData = [
   { Name: "John Doe", Age: "30", Email: "john@example.com" },
   { Name: "Jane Smith", Age: "25", Email: "jane@example.com" },
   { Name: "Sam Green", Age: "35", Email: "sam@example.com" },
 ];
-function OrderContent() {
+const OrderContent: React.FC = () => {
   const tabs = ["Pending", "Process", "Success"];
   const [activeTab, setActiveTab] = useState(tabs[0]);
   return (
@@ -16,6 +16,6 @@ function OrderContent() {
       <TabContent activeTab={activeTab} data={PendingData} />
     </section>
   );
-}
+};
 
 export default OrderContent;

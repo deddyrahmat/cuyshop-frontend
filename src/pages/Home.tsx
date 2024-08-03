@@ -1,8 +1,9 @@
+import React from "react";
 import Footer from "../components/organisms/Footer";
 import Header from "../components/organisms/Header";
 import ListCardProducts from "../components/organisms/ListCardProducts";
 
-function Home() {
+const Home: React.FC = () => {
   return (
     <>
       <Header />
@@ -10,6 +11,6 @@ function Home() {
       <Footer />
     </>
   );
-}
+};
 
 export default Home;

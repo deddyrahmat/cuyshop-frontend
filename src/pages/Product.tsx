@@ -1,8 +1,9 @@
+import React from "react";
 import Detail from "../components/organisms/Detail";
 import Footer from "../components/organisms/Footer";
 import Header from "../components/organisms/Header";
 
-function Product() {
+const Product: React.FC = () => {
   return (
     <>
       <Header />
@@ -10,6 +11,6 @@ function Product() {
       <Footer />
     </>
   );
-}
+};
 
 export default Product;

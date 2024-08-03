@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { handleProducts } from "../../../services/products";
 import Card from "../../molecules/Card";
@@ -16,6 +17,7 @@ interface ProductImage {
 interface Product {
   id: number;
   title: string;
+  slug: string;
   description: string;
   price: string;
   product_images: ProductImage[];
@@ -44,7 +46,7 @@ interface PaginationData {
   links: PaginationLinks[];
 }
 
-function ListCardProducts() {
+const ListCardProducts: React.FC = () => {
   const [dataProducts, setDataProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -89,6 +91,6 @@ function ListCardProducts() {
       </section>
     </section>
   );
-}
+};
 
 export default ListCardProducts;
