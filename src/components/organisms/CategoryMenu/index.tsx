@@ -1,20 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Lightbox from "react-18-image-lightbox";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import { FaShoppingCart } from "react-icons/fa";
 
-import "react-18-image-lightbox/style.css"; // Make sure to import the stylesheet
-import "swiper/css";
-import "swiper/css/navigation";
-import { isEmpty } from "../../../utils/array/CheckValueEmpty";
-import {
-  handleDetailProduct,
-  handleProducts,
-} from "../../../services/products";
-import { formatRupiah } from "../../../utils/currency/Rupiah";
-import SkeletonImage from "../../atoms/SkeletonImage";
+import { handleProducts } from "../../../services/products";
 import { useParams } from "react-router-dom";
 import SkeletonCard from "../../atoms/SkeletonCard";
 import Card from "../../molecules/Card";

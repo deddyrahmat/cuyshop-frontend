@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hooks";
 import Dropdown from "../../molecules/Dropdown";
 import Drawer from "../../molecules/Drawer";
@@ -21,13 +21,10 @@ interface DropdownMenu {
 }
 
 const Header: React.FC = () => {
-  const param = useLocation();
-  console.log("param", param);
   const { email } = useAppSelector((state: any) => state.auth);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [dataCategories, setDataCategories] = useState<DropdownMenu[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   const isActive = (path: string) => {
     // Jika path sama dengan '/'
@@ -53,7 +50,6 @@ const Header: React.FC = () => {
       );
       setDataCategories(dataMenu);
     }
-    setLoading(false);
   };
 
   useEffect(() => {

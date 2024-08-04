@@ -7,7 +7,7 @@ interface Params {
 
 export const handleProducts = async (
   position: number,
-  category: string | undefined
+  category: string | undefined = ""
 ) => {
   try {
     const params: Params = {};
