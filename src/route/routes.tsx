@@ -11,6 +11,7 @@ import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Categories from "../pages/Categories";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading type="xl" />}>
         <Product />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/kategori/:kategoriId",
+    element: (
+      <Suspense fallback={<Loading type="xl" />}>
+        <Categories />
       </Suspense>
     ),
   },

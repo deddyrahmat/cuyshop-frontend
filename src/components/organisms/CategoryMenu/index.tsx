@@ -1,9 +1,24 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { handleProducts } from "../../../services/products";
+import Lightbox from "react-18-image-lightbox";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import { FaShoppingCart } from "react-icons/fa";
+
+import "react-18-image-lightbox/style.css"; // Make sure to import the stylesheet
+import "swiper/css";
+import "swiper/css/navigation";
+import { isEmpty } from "../../../utils/array/CheckValueEmpty";
+import {
+  handleDetailProduct,
+  handleProducts,
+} from "../../../services/products";
+import { formatRupiah } from "../../../utils/currency/Rupiah";
+import SkeletonImage from "../../atoms/SkeletonImage";
+import { useParams } from "react-router-dom";
+import SkeletonCard from "../../atoms/SkeletonCard";
 import Card from "../../molecules/Card";
 import Pagination from "../../molecules/Pagination";
-import SkeletonCard from "../../atoms/SkeletonCard";
 
 interface ProductImage {
   id: number;
@@ -46,29 +61,30 @@ interface PaginationData {
   links: PaginationLinks[];
 }
 
-const ListCardProducts: React.FC = () => {
+const CategoryMenu: React.FC = () => {
+  const params = useParams();
+
   const [dataProducts, setDataProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const listProducts = async (page = 1) => {
-    const res = await handleProducts(page);
-    if (res) {
-      setDataProducts(res?.data?.data?.data);
-      setPagination(res?.data?.data);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const listProducts = async (page = 1) => {
+      const res = await handleProducts(page, params.kategoriId);
+      if (res) {
+        setDataProducts(res?.data?.data?.data);
+        setPagination(res?.data?.data);
+      }
+      setLoading(false);
+    };
     listProducts(currentPage);
-  }, [currentPage]);
+  }, [currentPage, params.kategoriId]);
 
   return (
     <section className="2xl:container 2xl:mx-auto py-5 px-8 2xl:px-1">
       <section className="flex lg:items-end flex-col lg:flex-row gap-2 mb-5">
-        <h1 className="font-bold">Produk Baru</h1>
+        <h1 className="font-bold capitalize">Kategori {params.kategoriId}</h1>
         <hr className="w-11/12 border border-green-600" />
       </section>
       <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -93,4 +109,4 @@ const ListCardProducts: React.FC = () => {
   );
 };
 
-export default ListCardProducts;
+export default CategoryMenu;
