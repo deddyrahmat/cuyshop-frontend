@@ -1,8 +1,7 @@
-/* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define a type for the slice state
-interface AuthSliceType {
+export interface AuthSliceType {
   email: string;
   id: number;
   name: string;
@@ -15,12 +14,11 @@ const initialState: AuthSliceType = localAuth
   ? JSON.parse(localAuth)
   : { token: "", name: "", id: 0, email: "", role: "" };
 
-export const UserSlice = createSlice({
+export const AuthSlice = createSlice({
   name: "userAuth",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    USER_LOGIN: (state, action) => {
+    USER_LOGIN: (state, action: PayloadAction<AuthSliceType>) => {
       state.token = action.payload.token;
       state.role = action.payload.role;
       state.id = action.payload.id;
@@ -38,6 +36,6 @@ export const UserSlice = createSlice({
   },
 });
 
-export const { USER_LOGIN, USER_LOGOUT } = UserSlice.actions;
+export const { USER_LOGIN, USER_LOGOUT } = AuthSlice.actions;
 
-export default UserSlice.reducer;
+export default AuthSlice.reducer;

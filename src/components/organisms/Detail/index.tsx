@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Lightbox from "react-18-image-lightbox";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -12,7 +11,10 @@ import { isEmpty } from "../../../utils/array/CheckValueEmpty";
 import { handleDetailProduct } from "../../../services/products";
 import { formatRupiah } from "../../../utils/currency/Rupiah";
 import SkeletonImage from "../../atoms/SkeletonImage";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { SET_CARTPAGE } from "../../../redux/cartSlice";
+import { CartType } from "../../../types/containerTypes";
 
 interface ImageItem {
   image: string;
@@ -45,7 +47,14 @@ interface Product {
 }
 
 const Detail: React.FC = () => {
+  const navigate = useNavigate();
   const params = useParams();
+
+  const dispatch = useAppDispatch();
+
+  const { email } = useAppSelector((state: any) => {
+    return state.auth;
+  });
 
   const [product, setProduct] = useState<Product | null>(null);
   const [items, setItems] = useState<ImageItem[]>([]);
@@ -90,6 +99,30 @@ const Detail: React.FC = () => {
   useEffect(() => {
     window.global = window as never;
   }, []);
+
+  const [cartProduct, setCartProduct] = useState<CartType>({});
+
+  const handleCart = () => {
+    setCartProduct({
+      price: product?.price,
+      id: product?.id,
+      title: product?.title,
+      slug: product?.slug,
+      thumbnail: imageUrl,
+      total: 1,
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(cartProduct).length > 0) {
+      // console.log("CartProduct", cartProduct);
+      dispatch(
+        SET_CARTPAGE({
+          data: cartProduct,
+        })
+      );
+    }
+  }, [cartProduct, dispatch]);
 
   if (isLoading) {
     return (
@@ -163,7 +196,8 @@ const Detail: React.FC = () => {
                       }}
                       className="p-1 mx-auto"
                       src={`${import.meta.env.VITE_URL_PUBLIC_STORAGE}/${item.image}`}
-                      alt="product image"
+                      alt="proimport CartProduct from '../CartProduct/index';
+duct image"
                     />
                   </article>
                 </SwiperSlide>
@@ -190,7 +224,10 @@ const Detail: React.FC = () => {
               : {product.quantity}
             </span>
           </article>
-          <button className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white px-6 py-3">
+          <button
+            className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white px-6 py-3"
+            onClick={() => handleCart()}
+          >
             <span>
               <FaShoppingCart className="text-xl" />
             </span>

@@ -12,7 +12,7 @@ const App: React.FC = () => {
   //   setAuthToken(token);
   // }
   useEffect(() => {
-    listen();
+    listen(); // Pastikan listener diaktifkan
   }, []);
   return (
     <>

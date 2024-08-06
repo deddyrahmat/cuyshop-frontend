@@ -9,6 +9,7 @@ import FormSearch from "../../molecules/FormSearch";
 import { handleCategories } from "../../../services/categories";
 import { isEmpty } from "../../../utils/array/CheckValueEmpty";
 import Button from "../../atoms/Button";
+import { CartSliceType } from "../../../types/containerTypes";
 interface Category {
   id: number;
   name: string;
@@ -22,6 +23,10 @@ interface DropdownMenu {
 
 const Header: React.FC = () => {
   const { email } = useAppSelector((state: any) => state.auth);
+  const { data: dataCart } = useAppSelector(
+    (state: { cart: CartSliceType }) => state.cart
+  );
+  // const { data: dataCart } = useAppSelector((state: any) => state.cart);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [dataCategories, setDataCategories] = useState<DropdownMenu[]>([]);
@@ -69,7 +74,7 @@ const Header: React.FC = () => {
             onClick={() => navigate("/cart")}
           >
             <FaShoppingCart className="text-green-700 text-2xl" />
-            <span className="text-md">3</span>
+            <span className="text-md">{dataCart.length}</span>
           </section>
         </section>
       </nav>
