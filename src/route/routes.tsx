@@ -12,6 +12,7 @@ import Orders from "../pages/Orders";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Categories from "../pages/Categories";
+import Account from "../pages/account";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading type="xl" />}>
         <Orders />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/account",
+    element: (
+      <Suspense fallback={<Loading type="xl" />}>
+        <Account />
       </Suspense>
     ),
   },

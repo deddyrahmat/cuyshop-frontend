@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import Dropdown from "../../molecules/Dropdown";
 import Drawer from "../../molecules/Drawer";
 import FormSearch from "../../molecules/FormSearch";
@@ -10,6 +10,9 @@ import { handleCategories } from "../../../services/categories";
 import { isEmpty } from "../../../utils/array/CheckValueEmpty";
 import Button from "../../atoms/Button";
 import { CartSliceType } from "../../../types/containerTypes";
+import { handleLogout } from "../../../services/auth";
+import { toast } from "react-toastify";
+import { USER_LOGOUT } from "../../../redux/authSlice";
 interface Category {
   id: number;
   name: string;
@@ -22,6 +25,7 @@ interface DropdownMenu {
 }
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { email } = useAppSelector((state: any) => state.auth);
   const { data: dataCart } = useAppSelector(
     (state: { cart: CartSliceType }) => state.cart
@@ -60,6 +64,14 @@ const Header: React.FC = () => {
   useEffect(() => {
     listMenuCategories();
   }, []);
+
+  const processLogout = async () => {
+    await handleLogout();
+    dispatch(USER_LOGOUT());
+
+    toast.success("Logout Berhasil");
+    navigate("/", { replace: true });
+  };
 
   return (
     <header className="mb-3">
@@ -163,7 +175,7 @@ const Header: React.FC = () => {
             <li>
               <Button
                 onClick={() => navigate("/")}
-                className={`rounded-lg ${isActive("/") ? " !text-green-700 hover:!text-white" : ""}`}
+                className={`rounded-lg ${isActive("/") ? " !text-white !bg-green-700 " : ""}`}
                 statusButton="link"
                 type="button"
               >
@@ -180,7 +192,7 @@ const Header: React.FC = () => {
             <li>
               <Button
                 onClick={() => navigate("/")}
-                className={`rounded-lg ${isActive("/tentang") ? " !text-green-700 hover:!text-white" : ""}`}
+                className={`rounded-lg ${isActive("/tentang") ? " !text-white !bg-green-700 " : ""}`}
                 statusButton="link"
                 type="button"
               >
@@ -194,7 +206,7 @@ const Header: React.FC = () => {
                 <li>
                   <Button
                     onClick={() => navigate("/login")}
-                    className={`rounded-lg ${isActive("/login") ? " !text-green-700 hover:!text-white" : ""}`}
+                    className={`rounded-lg ${isActive("/login") ? " !text-white !bg-green-700 " : ""}`}
                     type="button"
                     statusButton="link"
                   >
@@ -204,7 +216,7 @@ const Header: React.FC = () => {
                 <li>
                   <Button
                     onClick={() => navigate("/register")}
-                    className={`rounded-lg ${isActive("/register") ? " !text-green-700 hover:!text-white" : ""}`}
+                    className={`rounded-lg ${isActive("/register") ? " !text-white !bg-green-700 " : ""}`}
                     statusButton="link"
                     type="button"
                   >
@@ -213,16 +225,38 @@ const Header: React.FC = () => {
                 </li>
               </>
             ) : (
-              <li>
-                <Button
-                  onClick={() => navigate("/orders")}
-                  className={`rounded-lg ${isActive("/orders") ? " !text-green-700 hover:!text-white" : ""}`}
-                  statusButton="link"
-                  type="button"
-                >
-                  Orders
-                </Button>
-              </li>
+              <>
+                <li>
+                  <Button
+                    onClick={() => navigate("/orders")}
+                    className={`rounded-lg ${isActive("/orders") ? " !text-white !bg-green-700 " : ""}`}
+                    statusButton="link"
+                    type="button"
+                  >
+                    Orders
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    onClick={() => navigate("/account")}
+                    className={`rounded-lg ${isActive("/account") ? " !text-white !bg-green-700 " : ""}`}
+                    statusButton="link"
+                    type="button"
+                  >
+                    Account
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    onClick={() => processLogout()}
+                    className={`rounded-lg ${isActive("/logout") ? " !text-white !bg-green-700 " : ""}`}
+                    statusButton="link"
+                    type="button"
+                  >
+                    Logout
+                  </Button>
+                </li>
+              </>
             )}
           </ul>
         </section>

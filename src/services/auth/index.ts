@@ -66,3 +66,26 @@ export const handleRegister = async ({
     );
   }
 };
+
+export const handleLogout = async () => {
+  try {
+    const config = {
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    const response = await ApiAuth.Logout(config);
+    console.log("response", response);
+    return {
+      status: true,
+      message: "Logout successful",
+    };
+  } catch (error: any) {
+    return {
+      status: false,
+      message:
+        error?.response?.data?.message ||
+        "The server encountered an error. Please try again later.",
+    };
+  }
+};

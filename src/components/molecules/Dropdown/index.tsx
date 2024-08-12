@@ -33,7 +33,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className="relative">
       <Button
-        className={`flex items-center justify-between w-full pl-7 pr-9 text-gray-900 hover:bg-gray-100 rounded-lg ${isActive ? " !text-green-700 hover:!text-white" : ""}`}
+        className={`flex items-center justify-between w-full pl-7 pr-9 text-gray-900 hover:bg-gray-100 rounded-lg ${isActive ? " !text-white !bg-green-700 " : ""}`}
         onClick={toggleDropdown}
         statusButton="link"
         type="button"

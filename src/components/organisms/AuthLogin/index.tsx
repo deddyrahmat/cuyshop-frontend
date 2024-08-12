@@ -31,7 +31,6 @@ const AuthLogin: React.FC = () => {
         .required("Please input the field"),
     }),
     onSubmit: async (values: ValuesLogin) => {
-      console.log("values", values);
       const process = await handleLogin(values);
       if (!process.status) {
         toast.error(process.message);

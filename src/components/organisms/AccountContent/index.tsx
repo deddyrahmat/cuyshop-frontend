@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import TabContent from "../TabContent";
 import Tab from "../../molecules/Tab";
 import Table from "../Table";
+import AddressAccount from "../AddressAccount/index";
 
-const PendingData = [
+const ProfileData = [
   { Name: "John Doe", Age: "30", Email: "john@example.com" },
   { Name: "Jane Smith", Age: "25", Email: "jane@example.com" },
   { Name: "Sam Green", Age: "35", Email: "sam@example.com" },
 ];
 
-const OrderContent: React.FC = () => {
-  const tabs = ["Pending", "Process", "Success"];
+const AccountContent: React.FC = () => {
+  const tabs = ["Profile", "Alamat"];
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   const tabComponents = {
-    Pending: <Table data={PendingData} />,
-    Process: <h1>Processing Orders</h1>,
-    Success: <h1>Successful Orders</h1>,
+    Profile: <Table data={ProfileData} />,
+    Alamat: <AddressAccount />,
   };
 
   return (
@@ -27,4 +27,4 @@ const OrderContent: React.FC = () => {
   );
 };
 
-export default OrderContent;
+export default AccountContent;

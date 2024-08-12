@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { handleProducts } from "../../../services/products";
 import { useParams } from "react-router-dom";
 import SkeletonCard from "../../atoms/SkeletonCard";
-import Card from "../../molecules/Card";
+import Card from "../../molecules/CardWithImage";
 import Pagination from "../../molecules/Pagination";
 
 interface ProductImage {

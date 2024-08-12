@@ -11,7 +11,7 @@ function listener() {
   // Gunakan perbandingan mendalam jika perlu
   if (JSON.stringify(currentAuth) !== JSON.stringify(previousAuth)) {
     localStorage.setItem("auth", JSON.stringify(currentAuth));
-    setAuthToken(currentAuth.token);
+    // setAuthToken(currentAuth.token);
   }
 }
 

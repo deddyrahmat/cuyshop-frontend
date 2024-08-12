@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { handleProducts } from "../../../services/products";
-import Card from "../../molecules/Card";
+import CardWithImage from "../../molecules/CardWithImage";
 import Pagination from "../../molecules/Pagination";
 import SkeletonCard from "../../atoms/SkeletonCard";
 
@@ -77,7 +77,7 @@ const ListCardProducts: React.FC = () => {
               <SkeletonCard key={index} />
             ))
           : dataProducts.map((product: Product) => (
-              <Card key={product.id} product={product} />
+              <CardWithImage key={product.id} product={product} />
             ))}
       </section>
       <section className="flex justify-center mt-8 lg:mt-10">

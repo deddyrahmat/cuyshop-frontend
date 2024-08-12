@@ -25,7 +25,7 @@ interface CardProps {
   product: Product;
 }
 
-const Card: React.FC<CardProps> = ({ product }) => {
+const CardWithImage: React.FC<CardProps> = ({ product }) => {
   const mainImage = product.product_images.find(
     (image: ProductImage) => image.display_order === 1
   );
@@ -65,4 +65,4 @@ const Card: React.FC<CardProps> = ({ product }) => {
   );
 };
 
-export default Card;
+export default CardWithImage;
