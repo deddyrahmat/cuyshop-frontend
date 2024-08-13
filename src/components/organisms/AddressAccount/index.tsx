@@ -194,7 +194,9 @@ const AddressAccount: React.FC = () => {
       showCancelButton: true,
       confirmButtonText: "Delete",
       padding: "2em",
-      customClass: "sweet-alerts",
+      customClass: {
+        popup: "sweet-alerts",
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -362,7 +364,11 @@ const AddressAccount: React.FC = () => {
           listAddress.map((list, addrexIndex) => (
             <DefaultCard
               key={addrexIndex}
-              onClick={() => handleFormAddressForUpdate(list?.id)}
+              onClick={() => {
+                if (list?.id !== undefined) {
+                  handleFormAddressForUpdate(list.id);
+                }
+              }}
             >
               <article className="flex-grow text-left space-y-2">
                 <section className="flex gap-2">

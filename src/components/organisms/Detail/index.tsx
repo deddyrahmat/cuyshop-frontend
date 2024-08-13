@@ -11,8 +11,8 @@ import { isEmpty } from "../../../utils/array/CheckValueEmpty";
 import { handleDetailProduct } from "../../../services/products";
 import { formatRupiah } from "../../../utils/currency/Rupiah";
 import SkeletonImage from "../../atoms/SkeletonImage";
-import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../../redux/hooks";
 import { SET_CARTPAGE } from "../../../redux/cartSlice";
 import { CartType } from "../../../types/containerTypes";
 
@@ -47,14 +47,14 @@ interface Product {
 }
 
 const Detail: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const params = useParams();
 
   const dispatch = useAppDispatch();
 
-  const { email } = useAppSelector((state: any) => {
-    return state.auth;
-  });
+  // const { email } = useAppSelector((state: any) => {
+  //   return state.auth;
+  // });
 
   const [product, setProduct] = useState<Product | null>(null);
   const [items, setItems] = useState<ImageItem[]>([]);

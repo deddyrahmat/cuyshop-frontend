@@ -93,16 +93,16 @@ const CartProduct: React.FC = () => {
                   <div className="w-3/12 flex items-center gap-4">
                     <FaRegTrashAlt
                       className="text-xl md:text-2xl mr-5 text-red-800 cursor-pointer"
-                      onClick={() => dispatch(REMOVE_ITEM({ id: item.id }))}
+                      onClick={() => dispatch(REMOVE_ITEM({ id: item.id! }))}
                     />
                     <CiCircleMinus
                       className="text-xl md:text-3xl cursor-pointer"
-                      onClick={() => dispatch(DECREMENT_ITEM({ id: item.id }))}
+                      onClick={() => dispatch(DECREMENT_ITEM({ id: item.id! }))}
                     />
                     <span className="text-xl">{item.total}</span>
                     <CiCirclePlus
                       className="text-xl md:text-3xl cursor-pointer"
-                      onClick={() => dispatch(INCREMENT_ITEM({ id: item.id }))}
+                      onClick={() => dispatch(INCREMENT_ITEM({ id: item.id! }))}
                     />
                   </div>
                 </article>
