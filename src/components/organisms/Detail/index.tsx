@@ -15,6 +15,8 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/hooks";
 import { SET_CARTPAGE } from "../../../redux/cartSlice";
 import { CartType } from "../../../types/containerTypes";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 interface ImageItem {
   image: string;
@@ -35,6 +37,7 @@ interface Product {
   published: number;
   available: number;
   price: string;
+  weight: number;
   created_by: number;
   updated_by: number;
   category: CategoryItem;
@@ -108,8 +111,15 @@ const Detail: React.FC = () => {
       id: product?.id,
       title: product?.title,
       slug: product?.slug,
+      weight: product?.weight,
       thumbnail: imageUrl,
       total: 1,
+    });
+    // toast.success("Produk berhasil masuk ke keranjang");
+    Swal.fire({
+      title: "Sukses!",
+      text: "Produk berhasil masuk ke keranjang!",
+      icon: "success",
     });
   };
 
