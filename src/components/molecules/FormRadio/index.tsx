@@ -1,7 +1,5 @@
 import React, { ReactNode } from "react";
-import Label from "../../atoms/Label";
 import Inputs from "../../atoms/Inputs";
-import DefaultCard from "../DefaultCard";
 
 interface FormFieldProps {
   placeholder?: string;

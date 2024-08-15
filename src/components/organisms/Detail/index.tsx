@@ -15,7 +15,6 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/hooks";
 import { SET_CARTPAGE } from "../../../redux/cartSlice";
 import { CartType } from "../../../types/containerTypes";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 interface ImageItem {

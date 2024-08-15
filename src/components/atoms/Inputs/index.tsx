@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 
 interface InputProps {
   type: "text" | "email" | "password" | "checkbox" | "radio";

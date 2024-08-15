@@ -9,7 +9,6 @@ import "react-18-image-lightbox/style.css"; // Pastikan Anda mengimpor styleshee
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import FormField from "../../molecules/FormField";
 import Button from "../../atoms/Button";
 import FormCustomSelect from "../../molecules/FormCustomSelect";
 import Swal from "sweetalert2";
@@ -32,7 +31,6 @@ import Modal from "../../molecules/Modal";
 import { AddressSliceType } from "../../../redux/addressSlice";
 import { handleCheckShiping } from "../../../services/shipping";
 import FormRadio from "../../molecules/FormRadio";
-import SkeletonCard from "../../atoms/SkeletonCard";
 import Skeleton from "../../atoms/Skeleton";
 import { handleCheckoutProduct } from "../../../services/payment";
 import { AuthSliceType } from "../../../redux/authSlice";
@@ -71,7 +69,7 @@ const CartProduct: React.FC = () => {
       service: Yup.string(),
       total: Yup.number(),
     }),
-    onSubmit: async (values: any) => {
+    onSubmit: async () => {
       const resp = await handleCheckoutProduct({
         total: totalCost,
         fullname: userAuth?.name,
