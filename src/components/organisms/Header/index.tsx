@@ -12,7 +12,9 @@ import Button from "../../atoms/Button";
 import { CartSliceType } from "../../../types/containerTypes";
 import { handleLogout } from "../../../services/auth";
 import { toast } from "react-toastify";
-import { USER_LOGOUT } from "../../../redux/authSlice";
+import { RESET_AUTH_STATE, USER_LOGOUT } from "../../../redux/authSlice";
+import { RESET_ADDRESS_STATE } from "../../../redux/addressSlice";
+import { RESET_CART_STATE } from "../../../redux/cartSlice";
 interface Category {
   id: number;
   name: string;
@@ -68,6 +70,9 @@ const Header: React.FC = () => {
   const processLogout = async () => {
     await handleLogout();
     dispatch(USER_LOGOUT());
+    dispatch(RESET_ADDRESS_STATE());
+    dispatch(RESET_CART_STATE());
+    dispatch(RESET_AUTH_STATE());
 
     toast.success("Logout Berhasil");
     navigate("/", { replace: true });

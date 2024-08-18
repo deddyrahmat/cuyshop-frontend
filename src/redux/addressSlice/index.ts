@@ -31,9 +31,11 @@ export const AddressSlice = createSlice({
     ) => {
       state.province = action.payload.province;
     },
+    RESET_ADDRESS_STATE: () => initialState,
   },
 });
 
-export const { SET_ADDRESS, SET_PROVINCE } = AddressSlice.actions;
+export const { SET_ADDRESS, SET_PROVINCE, RESET_ADDRESS_STATE } =
+  AddressSlice.actions;
 
 export default AddressSlice.reducer;

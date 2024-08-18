@@ -75,7 +75,7 @@ export const handleLogout = async () => {
       },
     };
     const response = await ApiAuth.Logout(config);
-    console.log("response", response);
+    // console.log("response", response);
     return {
       status: true,
       message: "Logout successful",
