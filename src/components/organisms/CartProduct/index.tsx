@@ -32,15 +32,14 @@ import { AddressSliceType } from "../../../redux/addressSlice";
 import { handleCheckShiping } from "../../../services/shipping";
 import FormRadio from "../../molecules/FormRadio";
 import Skeleton from "../../atoms/Skeleton";
-import { handleCheckoutProduct } from "../../../services/payment";
 import { AuthSliceType } from "../../../redux/authSlice";
+import { handleStorOrder } from "../../../services/order";
 
 const CartProduct: React.FC = () => {
   const dispatch = useAppDispatch();
   const userAuth = useAppSelector(
     (state: { auth: AuthSliceType }) => state.auth
   );
-  console.log("userAuth", userAuth);
   const { data: dataCart } = useAppSelector(
     (state: { cart: CartSliceType }) => state.cart
   );
@@ -70,12 +69,23 @@ const CartProduct: React.FC = () => {
       total: Yup.number(),
     }),
     onSubmit: async () => {
-      const resp = await handleCheckoutProduct({
-        total: totalCost,
-        fullname: userAuth?.name,
-        email: userAuth?.email,
-      });
-      console.log("resp", resp);
+      if (selectedAddress && typeof selectedAddress.id === "number") {
+        const resp = await handleStorOrder({
+          fullname: userAuth?.name,
+          address: +selectedAddress?.id,
+          total_price: +totalCost,
+          email: userAuth?.email,
+          order_items: JSON.stringify([
+            dataCart,
+            selectedAddress,
+            selectedService,
+          ]),
+        });
+        console.log("resp?.data", resp?.data);
+        if (resp?.data) {
+          window.open(resp?.data?.snap_url?.original?.snap_url, "_blank");
+        }
+      }
 
       Swal.fire({
         title: "Good job!",
@@ -148,6 +158,7 @@ const CartProduct: React.FC = () => {
   useEffect(() => {
     formik.setFieldValue("total", totalCost);
   }, [totalCost]);
+
   return (
     <>
       <Modal isOpen={isModalOpen} title="Alamat" onClose={closeModal}>
@@ -289,7 +300,7 @@ const CartProduct: React.FC = () => {
                             (courier: any, indexCourier: number) => (
                               <FormRadio
                                 key={indexCourier}
-                                placeholder="Nama Lengkap"
+                                placeholder="Nama Service"
                                 unique={`service-${indexCourier}`}
                                 type="radio"
                                 value={courier.service}

@@ -50,3 +50,14 @@ export interface AddressValues {
   main: boolean;
   location: string;
 }
+
+// order type
+export interface OrderValues {
+  total_price: number;
+  address: number;
+  order_items: string;
+  fullname: string;
+  email: string;
+}
+
+// "SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`cuyshop`.`orders`, CONSTRAINT `orders_address_id_foreign` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`) ON UPDATE CASCADE) (Connection: mariadb, SQL: insert into `orders` (`updated_by`, `address_id`, `total_price`, `updated_at`, `created_at`) values (2, 358, 206000, 2024-08-18 09:59:28, 2024-08-18 09:59:28))"
