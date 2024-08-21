@@ -68,14 +68,17 @@ const Header: React.FC = () => {
   }, []);
 
   const processLogout = async () => {
-    await handleLogout();
-    dispatch(USER_LOGOUT());
-    dispatch(RESET_ADDRESS_STATE());
-    dispatch(RESET_CART_STATE());
-    dispatch(RESET_AUTH_STATE());
+    const res = await handleLogout();
+    console.log("res", res);
+    if (res?.status) {
+      dispatch(USER_LOGOUT());
+      dispatch(RESET_ADDRESS_STATE());
+      dispatch(RESET_CART_STATE());
+      dispatch(RESET_AUTH_STATE());
 
-    toast.success("Logout Berhasil");
-    navigate("/", { replace: true });
+      toast.success("Logout Berhasil");
+      navigate("/", { replace: true });
+    }
   };
 
   return (
@@ -124,7 +127,7 @@ const Header: React.FC = () => {
             <li>
               <Dropdown title="Kategori" items={dataCategories} />
             </li>
-            <li>
+            {/* <li>
               <Button
                 onClick={() => navigate("/tentang")}
                 className={`w-full text-left ${isActive("/tentang") ? "!bg-green-700 text-white" : ""}`}
@@ -133,7 +136,7 @@ const Header: React.FC = () => {
               >
                 <span className="ml-3">Tentang</span>
               </Button>
-            </li>
+            </li> */}
             {isEmpty(email) ? (
               <>
                 <li>
@@ -194,7 +197,7 @@ const Header: React.FC = () => {
                 isActive={isActive("/kategori")}
               />
             </li>
-            <li>
+            {/* <li>
               <Button
                 onClick={() => navigate("/")}
                 className={`rounded-lg ${isActive("/tentang") ? " !text-white !bg-green-700 " : ""}`}
@@ -203,7 +206,7 @@ const Header: React.FC = () => {
               >
                 Tentang
               </Button>
-            </li>
+            </li> */}
           </ul>
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {isEmpty(email) ? (

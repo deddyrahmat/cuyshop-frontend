@@ -1,6 +1,7 @@
 import React from "react";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
+import { formatRupiah } from "../../../utils/currency/Rupiah";
 
 interface ProductImage {
   id: number;
@@ -57,7 +58,7 @@ const CardWithImage: React.FC<CardProps> = ({ product }) => {
         </p>
         <div className="flex items-center justify-between">
           <span className="text-sm lg:text-lg font-bold text-gray-500 dark:text-white">
-            ${product.price}
+            {formatRupiah(product.price)}
           </span>
         </div>
       </div>

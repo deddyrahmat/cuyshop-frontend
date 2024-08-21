@@ -27,6 +27,7 @@ export const AuthSlice = createSlice({
     },
     USER_LOGOUT: (state) => {
       localStorage.removeItem("auth");
+      // console.log("Removed auth:", localStorage.getItem("auth")); // This should log `null`
       state.token = "";
       state.role = "";
       state.id = 0;

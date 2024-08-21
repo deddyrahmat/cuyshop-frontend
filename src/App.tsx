@@ -13,6 +13,8 @@ const App: React.FC = () => {
     setAuthToken(token);
   }
   useEffect(() => {
+    console.log("test");
+
     listen(); // Pastikan listener diaktifkan
   }, []);
   return (

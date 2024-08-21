@@ -6,10 +6,13 @@ export interface AddressSliceType {
   province: Record<string, any>[];
 }
 
-const initialState: AddressSliceType = {
-  data: {},
-  province: [],
-};
+const localAddress: any = localStorage.getItem("address");
+const initialState: AddressSliceType = localAddress
+  ? JSON.parse(localAddress)
+  : {
+      data: {},
+      province: [],
+    };
 
 export const AddressSlice = createSlice({
   name: "addressStore",
@@ -21,6 +24,7 @@ export const AddressSlice = createSlice({
         data: Record<string, any>;
       }>
     ) => {
+      console.log("action.payload", action.payload);
       state.data = action.payload.data;
     },
     SET_PROVINCE: (

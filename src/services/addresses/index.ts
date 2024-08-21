@@ -7,7 +7,7 @@ interface AddressValues {
   province_id: string;
   city_id: string;
   other: string;
-  main: boolean;
+  main: number;
   location: string;
 }
 
@@ -76,10 +76,22 @@ export const handleListAddresses = async () => {
     };
 
     const response = await ApiAddresses.listAddresses(config);
+
+    if (!response.data) {
+      return {
+        status: true,
+        message: "Failed get list addresses",
+      };
+    }
+    const addresses = response?.data?.data?.map((address: AddressValues) => ({
+      ...address,
+      main: address.main === 1, // Convert 1 to true and 0 to false
+    }));
+
     return {
       status: true,
       message: "Successfully get list addresses",
-      data: response.data.data,
+      data: addresses,
     };
   } catch (error) {
     console.log("error", error);

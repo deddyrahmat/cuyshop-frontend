@@ -59,12 +59,13 @@ const AddressAccount: React.FC = () => {
 
   const getListAddresses = async () => {
     const response = await handleListAddresses();
-    if (response) {
-      const addresses = response.data.map((address: any) => ({
-        ...address,
-        main: address.main === 1, // Convert 1 to true and 0 to false
-      }));
-      setListAddress(addresses);
+    if (response?.data) {
+      // const addresses = response.data.map((address: any) => ({
+      //   ...address,
+      //   main: address.main === 1, // Convert 1 to true and 0 to false
+      // }));
+      // console.log("responsed ", response);
+      setListAddress(response?.data);
     }
   };
 

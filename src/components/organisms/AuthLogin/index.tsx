@@ -8,6 +8,8 @@ import Button from "../../atoms/Button";
 import { handleLogin } from "../../../services/auth";
 import { useAppDispatch } from "../../../redux/hooks";
 import { USER_LOGIN } from "../../../redux/authSlice";
+import { SET_ADDRESS } from "../../../redux/addressSlice";
+import { handleListAddresses } from "../../../services/addresses";
 
 interface ValuesLogin {
   email: string;
@@ -17,6 +19,14 @@ interface ValuesLogin {
 const AuthLogin: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const getListAddresses = async () => {
+    const response = await handleListAddresses();
+    if (response?.data) {
+      dispatch(SET_ADDRESS({ data: response?.data }));
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -36,10 +46,12 @@ const AuthLogin: React.FC = () => {
         toast.error(process.message);
       }
       dispatch(USER_LOGIN(process.data.data));
+      getListAddresses();
       toast.success(process.message);
       navigate("/", { replace: true });
     },
   });
+
   return (
     <section className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-[50vh] lg:py-0">
       <section className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

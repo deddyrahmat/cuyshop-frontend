@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import SkeletonCard from "../../atoms/SkeletonCard";
 import Card from "../../molecules/CardWithImage";
 import Pagination from "../../molecules/Pagination";
+import { isEmpty } from "../../../utils/array/CheckValueEmpty";
 
 interface ProductImage {
   id: number;
@@ -70,9 +71,9 @@ const CategoryMenu: React.FC = () => {
 
   return (
     <section className="2xl:container 2xl:mx-auto py-5 px-8 2xl:px-1">
-      <section className="flex lg:items-end flex-col lg:flex-row gap-2 mb-5">
-        <h1 className="font-bold capitalize">Kategori {params.kategoriId}</h1>
-        <hr className="w-11/12 border border-green-600" />
+      <section className="flex lg:items-end flex-col lg:flex-row  gap-4 mb-5">
+        <h1 className="font-bold capitalize ">Kategori {params.kategoriId}</h1>
+        <hr className="flex-grow border border-green-600" />
       </section>
       <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {loading
@@ -83,15 +84,25 @@ const CategoryMenu: React.FC = () => {
               <Card key={product.id} product={product} />
             ))}
       </section>
-      <section className="flex justify-center mt-8 lg:mt-10">
-        {pagination && (
-          <Pagination
-            currentPage={pagination.current_page}
-            lastPage={pagination.last_page}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
-        )}
-      </section>
+      {dataProducts?.length === 0 && (
+        <p className="text-center text-xl lg:text-3xl font-bold mt-10">
+          Produk Tidak Tersedia
+        </p>
+      )}
+
+      {!isEmpty(dataProducts) && (
+        <section className="flex justify-center mt-8 lg:mt-10">
+          {pagination &&
+            pagination?.from !== 1 &&
+            pagination?.last_page !== 1 && (
+              <Pagination
+                currentPage={pagination.current_page}
+                lastPage={pagination.last_page}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            )}
+        </section>
+      )}
     </section>
   );
 };
