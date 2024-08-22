@@ -1,7 +1,7 @@
 import React from "react";
 
 interface InputProps {
-  type: "text" | "email" | "password" | "checkbox" | "radio";
+  type: "text" | "search" | "email" | "password" | "checkbox" | "radio";
   placeholder?: string;
   id: string;
   className: string;
@@ -10,6 +10,8 @@ interface InputProps {
   isDisabled?: boolean;
   name?: string; // Optional for radio buttons
   checked?: boolean; // Tambahkan ini untuk mendukung prop checked
+  onFocus?: () => void; // Tambahkan properti onFocus
+  onBlur?: () => void; // Tambahkan properti onBlur
 }
 
 const Inputs: React.FC<InputProps> = ({
@@ -20,6 +22,8 @@ const Inputs: React.FC<InputProps> = ({
   value,
   onChange,
   isDisabled = false,
+  onFocus, // Tambahkan onFocus ke properti umum
+  onBlur, // Tambahkan onBlur ke properti umum
   name,
   checked, // Tambahkan ini untuk mendukung prop checked
 }) => {

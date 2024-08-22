@@ -5,7 +5,7 @@ interface ButtonProps {
   children?: ReactNode;
   className: string;
   isLoading?: boolean;
-  statusButton: "primary" | "danger" | "gray" | "disabled" | "link";
+  statusButton: "primary" | "danger" | "gray" | "disabled" | "link" | "custom";
   type: "button" | "submit" | "reset";
   isDisabled?: boolean;
   onClick?: ReactEventHandler;
@@ -20,6 +20,8 @@ const buttonStyles = {
   disabled:
     "bg-gray-400 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-gray-200 font-semibold xxl:font-bold text-sm xxl:text-base",
   link: "bg-white hover:bg-green-600 py-[8px] px-[16px] xxl:py-[12px] xxl:px-[24px] rounded text-gray-800 hover:text-white font-semibold xxl:font-bold text-sm xxl:text-base",
+  custom:
+    "rounded text-gray-800 font-semibold xxl:font-bold text-sm xxl:text-base",
 };
 
 const Button: React.FC<ButtonProps> = ({

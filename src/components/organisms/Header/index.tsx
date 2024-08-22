@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import Dropdown from "../../molecules/Dropdown";
 import Drawer from "../../molecules/Drawer";
@@ -15,6 +18,7 @@ import { toast } from "react-toastify";
 import { RESET_AUTH_STATE, USER_LOGOUT } from "../../../redux/authSlice";
 import { RESET_ADDRESS_STATE } from "../../../redux/addressSlice";
 import { RESET_CART_STATE } from "../../../redux/cartSlice";
+
 interface Category {
   id: number;
   name: string;
@@ -69,7 +73,6 @@ const Header: React.FC = () => {
 
   const processLogout = async () => {
     const res = await handleLogout();
-    console.log("res", res);
     if (res?.status) {
       dispatch(USER_LOGOUT());
       dispatch(RESET_ADDRESS_STATE());
@@ -81,6 +84,18 @@ const Header: React.FC = () => {
     }
   };
 
+  const formik = useFormik({
+    initialValues: {
+      keyword: "",
+    },
+    validationSchema: Yup.object({
+      keyword: Yup.string().max(255, "Maximum 255 characters"),
+    }),
+    onSubmit: (values: any) => {
+      navigate(`/search/${values.keyword}`);
+    },
+  });
+
   return (
     <header className="mb-3">
       <nav className="bg-green-700">
@@ -88,7 +103,7 @@ const Header: React.FC = () => {
           <section className="bg-gray-200 p-3 rounded-lg">
             <img src="/image/logo/logo.png" alt="logo" className="h-4 w-4" />
           </section>
-          <FormSearch classNames="hidden md:flex" />
+          <FormSearch classNames="hidden md:flex" formik={formik} />
           <section
             className="ml-3 flex justify-center items-center gap-1 bg-white rounded-lg py-2 px-3 cursor-pointer"
             onClick={() => navigate("/cart")}
@@ -110,7 +125,10 @@ const Header: React.FC = () => {
           <GiHamburgerMenu className="text-2xl" />
         </Button>
 
-        <FormSearch classNames="md:hidden flex ring-1 ring-green-700" />
+        <FormSearch
+          classNames="md:hidden flex ring-1 ring-green-700"
+          formik={formik}
+        />
 
         <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
           <ul className="space-y-2 font-medium">

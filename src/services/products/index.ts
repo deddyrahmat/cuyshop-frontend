@@ -5,6 +5,12 @@ interface Params {
   category_slug?: string;
 }
 
+interface ParamsSearch {
+  page?: number;
+  search?: string;
+  totalShow?: number;
+}
+
 export const handleProducts = async (
   position: number,
   category: string | undefined = ""
@@ -25,6 +31,44 @@ export const handleProducts = async (
     };
 
     const response = await ApiProducts.listProducts(config);
+    return {
+      status: true,
+      message: "Successfully Get Products",
+      data: response.data,
+    };
+  } catch (error) {
+    console.log("error", error);
+    return {
+      status: false,
+      message: "The server encountered an error. Please try again later.",
+    };
+  }
+};
+
+export const handleSearchProducts = async (
+  position: number,
+  search: string,
+  totalShow: number
+) => {
+  try {
+    const params: ParamsSearch = {};
+    if (position) {
+      params.page = position;
+    }
+    if (search) {
+      params.search = search;
+    }
+    if (totalShow) {
+      params.totalShow = totalShow;
+    }
+    const config = {
+      params,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await ApiProducts.searchProducts(config);
     return {
       status: true,
       message: "Successfully Get Products",

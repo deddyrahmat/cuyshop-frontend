@@ -15,6 +15,7 @@ import Categories from "../pages/Categories";
 import Account from "../pages/account";
 import GuestRoute from "./GuestRoute";
 import PrivateRoute from "./PrivateRoute";
+import Search from "../pages/Search";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading type="xl" />}>
         <Home />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/search/:keyword",
+    element: (
+      <Suspense fallback={<Loading type="xl" />}>
+        <Search />
       </Suspense>
     ),
   },
@@ -42,46 +51,6 @@ export const router = createBrowserRouter([
     ),
   },
 
-  // {
-  //   path: "/cart",
-  //   element: (
-  //     <Suspense fallback={<Loading type="xl" />}>
-  //       <Cart />
-  //     </Suspense>
-  //   ),
-  // },
-  // {
-  //   path: "/orders",
-  //   element: (
-  //     <Suspense fallback={<Loading type="xl" />}>
-  //       <Orders />
-  //     </Suspense>
-  //   ),
-  // },
-  // {
-  //   path: "/account",
-  //   element: (
-  //     <Suspense fallback={<Loading type="xl" />}>
-  //       <Account />
-  //     </Suspense>
-  //   ),
-  // },
-  // {
-  //   path: "/login",
-  //   element: (
-  //     <Suspense fallback={<Loading type="xl" />}>
-  //       <Login />
-  //     </Suspense>
-  //   ),
-  // },
-  // {
-  //   path: "/register",
-  //   element: (
-  //     <Suspense fallback={<Loading type="xl" />}>
-  //       <Register />
-  //     </Suspense>
-  //   ),
-  // },
   {
     path: "/",
     element: (
