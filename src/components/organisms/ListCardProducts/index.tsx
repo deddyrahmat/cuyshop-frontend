@@ -5,47 +5,7 @@ import CardWithImage from "../../molecules/CardWithImage";
 import Pagination from "../../molecules/Pagination";
 import SkeletonCard from "../../atoms/SkeletonCard";
 import { isEmpty } from "../../../utils/array/CheckValueEmpty";
-
-interface ProductImage {
-  id: number;
-  product_id: number;
-  image: string[];
-  display_order: number;
-  created_at: string;
-  updated_at: string;
-}
-
-interface Product {
-  id: number;
-  title: string;
-  slug: string;
-  description: string;
-  price: string;
-  product_images: ProductImage[];
-  // Tambahkan properti lain yang diperlukan
-}
-
-interface PaginationLinks {
-  url: string | null;
-  label: string;
-  active: boolean;
-}
-
-interface PaginationData {
-  current_page: number;
-  data: Product[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  next_page_url: string | null;
-  path: string;
-  per_page: number;
-  prev_page_url: string | null;
-  to: number;
-  total: number;
-  links: PaginationLinks[];
-}
+import { PaginationData, Product } from "../../../types/containerTypes";
 
 const ListCardProducts: React.FC = () => {
   const [dataProducts, setDataProducts] = useState<Product[]>([]);

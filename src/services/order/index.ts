@@ -1,6 +1,38 @@
 import ApiOrder from "../../config/Endpoints/order";
 import { OrderValues } from "../../types/containerTypes";
 
+interface Params {
+  page?: number;
+}
+
+export const handleOrders = async (position: number) => {
+  try {
+    const params: Params = {};
+    if (position) {
+      params.page = position;
+    }
+    const config = {
+      params,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await ApiOrder.listOrder(config);
+    return {
+      status: true,
+      message: "Successfully Get Order",
+      data: response.data.data,
+    };
+  } catch (error) {
+    console.log("error", error);
+    return {
+      status: false,
+      message: "The server encountered an error. Please try again later.",
+    };
+  }
+};
+
 export const handleStorOrder = async ({
   fullname,
   address,

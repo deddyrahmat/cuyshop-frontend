@@ -1,18 +1,23 @@
 import React from "react";
-import TableCell from "../TableCell";
-
-type TableRowData = Record<string, string>;
 
 interface TableRowProps {
-  rowData: TableRowData;
+  rowData: Record<string, React.ReactNode>;
+  showActionColumn?: boolean;
 }
 
-const TableRow: React.FC<TableRowProps> = ({ rowData }) => {
+const TableRow: React.FC<TableRowProps> = ({
+  rowData,
+  showActionColumn = true,
+}) => {
   return (
     <tr>
-      {Object.keys(rowData).map((key, index) => (
-        <TableCell key={index} content={rowData[key]} />
-      ))}
+      {Object.keys(rowData).map((key) =>
+        showActionColumn || key !== "Action" ? (
+          <td key={key} className="py-2 px-4 border capitalize">
+            {rowData[key]}
+          </td>
+        ) : null
+      )}
     </tr>
   );
 };
