@@ -16,6 +16,7 @@ import Account from "../pages/account";
 import GuestRoute from "./GuestRoute";
 import PrivateRoute from "./PrivateRoute";
 import Search from "../pages/Search";
+import Setttings from "../pages/Settings";
 
 export const router = createBrowserRouter([
   {
@@ -76,10 +77,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/account",
+        path: "/settings",
         element: (
           <Suspense fallback={<Loading type="xl" />}>
-            <Account />
+            <Setttings />
           </Suspense>
         ),
       },

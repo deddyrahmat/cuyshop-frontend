@@ -245,33 +245,35 @@ const OrderContent: React.FC = () => {
         )}
 
         {isTabletOrMobile && (
-          <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <>
             <section className="flex lg:items-end flex-col lg:flex-row  gap-1 mb-4">
               <h1 className="font-bold capitalize">List Orders</h1>
               <hr className="flex-grow border border-green-600" />
             </section>
-            {Array.isArray(dataProducts) &&
-              !isEmpty(dataProducts) &&
-              dataProducts.map((product: DataItem, productIndex: number) => (
-                <DefaultCard key={productIndex}>
-                  <p className="capitalize font-semibold mb-2">
-                    {product?.Penerima}
-                  </p>
-                  <p className="font-medium">
-                    {product?.["Tanggal Pembelian"]}
-                  </p>
-                  <p className="font-medium">{product?.Total}</p>
-                  <div className="flex justify-between items-center w-full mt-4">
-                    <span
-                      className={`${product["Status Pembayaran"] === "pending" ? "bg-yellow-100 text-yellow-800" : product["Status Pembayaran"] === "cancel" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}  text-xs font-medium py-1 px-3 rounded `}
-                    >
-                      {product["Status Pembayaran"]}
-                    </span>
-                    <span>{product.Action}</span>
-                  </div>
-                </DefaultCard>
-              ))}
-          </section>
+            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {Array.isArray(dataProducts) &&
+                !isEmpty(dataProducts) &&
+                dataProducts.map((product: DataItem, productIndex: number) => (
+                  <DefaultCard key={productIndex}>
+                    <p className="capitalize font-semibold mb-2">
+                      {product?.Penerima}
+                    </p>
+                    <p className="font-medium">
+                      {product?.["Tanggal Pembelian"]}
+                    </p>
+                    <p className="font-medium">{product?.Total}</p>
+                    <div className="flex justify-between items-center w-full mt-4">
+                      <span
+                        className={`${product["Status Pembayaran"] === "pending" ? "bg-yellow-100 text-yellow-800" : product["Status Pembayaran"] === "cancel" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}  text-xs font-medium py-1 px-3 rounded `}
+                      >
+                        {product["Status Pembayaran"]}
+                      </span>
+                      <span>{product.Action}</span>
+                    </div>
+                  </DefaultCard>
+                ))}
+            </section>
+          </>
         )}
         {!isEmpty(dataProducts) && (
           <section className="flex justify-center mt-8 lg:mt-10">

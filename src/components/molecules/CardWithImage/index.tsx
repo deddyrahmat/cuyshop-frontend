@@ -53,9 +53,9 @@ const CardWithImage: React.FC<CardProps> = ({ product }) => {
           </h5>
         </Link>
         {/* </a> */}
-        <p className="line-clamp-3 text-sm text-gray-700 dark:text-gray-300 mt-3 mb-4">
+        <div className="line-clamp-3 text-sm text-gray-700 dark:text-gray-300 mt-3 mb-4">
           {parse(product.description)}
-        </p>
+        </div>
         <div className="flex items-center justify-between">
           <span className="text-sm lg:text-lg font-bold text-gray-500 dark:text-white">
             {formatRupiah(product.price)}

@@ -22,29 +22,6 @@ import FormCheckbox from "../../molecules/FormCheckbox";
 import Swal from "sweetalert2";
 import { AddressValues } from "../../../types/containerTypes";
 
-// interface ProvinceValues {
-//   id: string;
-//   name: string;
-// }
-// interface CityValues {
-//   id: string;
-//   name: string;
-//   postal_code: string;
-// }
-// interface AddressValues {
-//   id?: number;
-//   fullname: string;
-//   phone: string;
-//   address: string;
-//   province_id: string;
-//   city_id: string;
-//   province?: ProvinceValues;
-//   city?: CityValues;
-//   other: string;
-//   main: boolean;
-//   location: string;
-// }
-
 const AddressAccount: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,11 +38,6 @@ const AddressAccount: React.FC = () => {
   const getListAddresses = async () => {
     const response = await handleListAddresses();
     if (response?.data) {
-      // const addresses = response.data.map((address: any) => ({
-      //   ...address,
-      //   main: address.main === 1, // Convert 1 to true and 0 to false
-      // }));
-      // console.log("responsed ", response);
       setListAddress(response?.data);
     }
   };
@@ -361,48 +333,50 @@ const AddressAccount: React.FC = () => {
           )}
         </form>
       </Modal>
-      <section className="grid grid-cols-4 gap-4 items-start">
-        {listAddress.length > 0 &&
-          listAddress.map((list, addrexIndex) => (
-            <DefaultCard
-              key={addrexIndex}
-              onClick={() => {
-                if (list?.id !== undefined) {
-                  handleFormAddressForUpdate(list.id);
-                }
-              }}
-            >
-              <article className="flex-grow text-left space-y-2">
-                <section className="flex gap-2">
-                  <h6 className="capitalize">{list.fullname}</h6>
-                  <span className=" font-normal">|</span>
-                  <span className="font-normal hover:!text-white">
-                    {list.phone}
-                  </span>
-                </section>
-                <p className="text-sm font-normal">{`${list.address} ${list.other}`}</p>
-                <p className="text-sm font-normal">{`${list?.province?.name}, ${list?.city?.name} ,${list?.city?.postal_code}`}</p>
-              </article>
-              {list.main ? (
-                <p className="text-center mt-4 mb-3 bg-green-500 border border-white text-white py-1 rounded-lg w-4/12">
-                  Utama
-                </p>
-              ) : (
-                ""
-              )}
-            </DefaultCard>
-          ))}
-      </section>
+      <section className="container mx-auto py-5 px-8 bg-white min-h-[50vh]">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+          {listAddress.length > 0 &&
+            listAddress.map((list, addrexIndex) => (
+              <DefaultCard
+                key={addrexIndex}
+                onClick={() => {
+                  if (list?.id !== undefined) {
+                    handleFormAddressForUpdate(list.id);
+                  }
+                }}
+              >
+                <article className="flex-grow text-left space-y-2">
+                  <section className="flex gap-2">
+                    <h6 className="capitalize">{list.fullname}</h6>
+                    <span className=" font-normal">|</span>
+                    <span className="font-normal hover:!text-white">
+                      {list.phone}
+                    </span>
+                  </section>
+                  <p className="text-sm font-normal">{`${list.address} ${list.other}`}</p>
+                  <p className="text-sm font-normal">{`${list?.province?.name}, ${list?.city?.name} ,${list?.city?.postal_code}`}</p>
+                </article>
+                {list.main ? (
+                  <p className="text-center mt-4 mb-3 bg-green-500 border border-white text-white py-1 rounded-lg w-4/12">
+                    Utama
+                  </p>
+                ) : (
+                  ""
+                )}
+              </DefaultCard>
+            ))}
+        </section>
 
-      <section className="flex justify-center items-center w-full mt-8 lg:mt-12">
-        <Button
-          className="me-3 "
-          statusButton="primary"
-          type="button"
-          onClick={openModal}
-        >
-          Tambah alamat baru
-        </Button>
+        <section className="flex justify-center items-center w-full mt-8 lg:mt-12">
+          <Button
+            className="me-3 "
+            statusButton="primary"
+            type="button"
+            onClick={openModal}
+          >
+            Tambah alamat baru
+          </Button>
+        </section>
       </section>
     </>
   );

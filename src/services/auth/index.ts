@@ -46,6 +46,7 @@ export const handleRegister = async ({
       headers: {
         "content-type": "application/json",
       },
+      withCredentials: true, // Tambahkan ini
     };
     const body = JSON.stringify({
       name,
