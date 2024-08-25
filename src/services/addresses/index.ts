@@ -1,15 +1,16 @@
 import ApiAddresses from "../../config/Endpoints/address";
+import { AddressValues } from "../../types/containerTypes";
 
-interface AddressValues {
-  fullname: string;
-  phone: string;
-  address: string;
-  province_id: string;
-  city_id: string;
-  other: string;
-  main: number;
-  location: string;
-}
+// interface AddressValues {
+//   fullname: string;
+//   phone: string;
+//   address: string;
+//   province_id: string;
+//   city_id: string;
+//   other: string;
+//   main: number;
+//   location: string;
+// }
 
 export const handleListProvincies = async () => {
   try {
@@ -85,7 +86,7 @@ export const handleListAddresses = async () => {
     }
     const addresses = response?.data?.data?.map((address: AddressValues) => ({
       ...address,
-      main: address.main === 1, // Convert 1 to true and 0 to false
+      main: address.main ? 1 : 0, // Convert 1 to true and 0 to false
     }));
 
     return {

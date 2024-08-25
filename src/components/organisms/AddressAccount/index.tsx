@@ -20,29 +20,30 @@ import { SET_ADDRESS, SET_PROVINCE } from "../../../redux/addressSlice";
 import { useAppDispatch } from "../../../redux/hooks";
 import FormCheckbox from "../../molecules/FormCheckbox";
 import Swal from "sweetalert2";
+import { AddressValues } from "../../../types/containerTypes";
 
-interface ProvinceValues {
-  id: string;
-  name: string;
-}
-interface CityValues {
-  id: string;
-  name: string;
-  postal_code: string;
-}
-interface AddressValues {
-  id?: number;
-  fullname: string;
-  phone: string;
-  address: string;
-  province_id: string;
-  city_id: string;
-  province?: ProvinceValues;
-  city?: CityValues;
-  other: string;
-  main: boolean;
-  location: string;
-}
+// interface ProvinceValues {
+//   id: string;
+//   name: string;
+// }
+// interface CityValues {
+//   id: string;
+//   name: string;
+//   postal_code: string;
+// }
+// interface AddressValues {
+//   id?: number;
+//   fullname: string;
+//   phone: string;
+//   address: string;
+//   province_id: string;
+//   city_id: string;
+//   province?: ProvinceValues;
+//   city?: CityValues;
+//   other: string;
+//   main: boolean;
+//   location: string;
+// }
 
 const AddressAccount: React.FC = () => {
   const dispatch = useAppDispatch();

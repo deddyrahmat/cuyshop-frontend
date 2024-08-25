@@ -2,7 +2,7 @@ import React from "react";
 import TableRow from "../../atoms/TableRow";
 
 interface TableBodyProps {
-  data: Record<string, React.ReactNode>[];
+  data: Record<string, React.ReactNode | string>[]; // Fleksibel untuk ReactNode dan string
   showActionColumn?: boolean;
 }
 

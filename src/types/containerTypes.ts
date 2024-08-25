@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 // products
 export interface ProductImage {
   id: number;
@@ -32,12 +30,42 @@ export interface Order {
 }
 
 export interface DataItem {
-  id: string;
-  Penerima: string;
-  Total: string;
-  "Status Pembayaran": string;
-  "Tanggal Pembelian": string;
-  Action: ReactNode; // Update untuk menerima ReactNode
+  [key: string]: React.ReactNode; // Signature indeks
+  id: React.ReactNode;
+  Penerima: React.ReactNode;
+  Total: React.ReactNode;
+  "Status Pembayaran": React.ReactNode;
+  "Tanggal Pembelian": React.ReactNode;
+  Action: React.ReactNode;
+}
+
+// export interface DataItem {
+//   id: React.ReactNode;
+//   Penerima: React.ReactNode;
+//   Total: React.ReactNode;
+//   "Status Pembayaran": React.ReactNode;
+//   "Tanggal Pembelian": React.ReactNode;
+//   Action: React.ReactNode;
+// }
+
+export interface OrderItemsParseType {
+  fullname: string;
+  phone: string;
+  address: string;
+  other?: string;
+  province?: {
+    name: string;
+  };
+  city?: {
+    name: string;
+    postal_code: string;
+  };
+  service?: string;
+  description?: string;
+  cost?: {
+    etd: string;
+    value: number;
+  }[]; // cost adalah array yang bisa berisi objek dengan etd dan value
 }
 
 // pagination

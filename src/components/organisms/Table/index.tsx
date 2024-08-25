@@ -3,12 +3,11 @@ import TableHeader from "../../atoms/TableHeader";
 import TableBody from "../../molecules/TableBody";
 
 interface TableProps {
-  data: Record<string, React.ReactNode>[];
-  showActionColumn?: boolean; // Menentukan apakah kolom Action harus ditampilkan
+  data: Record<string, React.ReactNode | string>[]; // Fleksibel untuk ReactNode dan string
+  showActionColumn?: boolean;
 }
 
 const Table: React.FC<TableProps> = ({ data, showActionColumn = true }) => {
-  // Menentukan headers berdasarkan data dan apakah Action harus ditampilkan
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
   const modifiedHeaders = showActionColumn
     ? headers

@@ -22,8 +22,6 @@ const Inputs: React.FC<InputProps> = ({
   value,
   onChange,
   isDisabled = false,
-  onFocus, // Tambahkan onFocus ke properti umum
-  onBlur, // Tambahkan onBlur ke properti umum
   name,
   checked, // Tambahkan ini untuk mendukung prop checked
 }) => {

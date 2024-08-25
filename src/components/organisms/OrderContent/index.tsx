@@ -7,6 +7,7 @@ import {
   CartType,
   DataItem,
   Order,
+  OrderItemsParseType,
   PaginationData,
 } from "../../../types/containerTypes";
 import { isEmpty } from "../../../utils/array/CheckValueEmpty";
@@ -18,44 +19,34 @@ import DefaultCard from "../../molecules/DefaultCard";
 
 const OrderContent: React.FC = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1024px)",
-  });
-  // const dispatch = useAppDispatch();
-  // const orderData = useAppSelector(
-  //   (state: { order: OrderSliceType }) => state.order
-  // );
+  const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1024px)" });
 
-  const [dataProducts, setDataProducts] = useState<DataItem[]>([]); // Perbarui tipe menjadi DataItem[]
-  // const [loading, setLoading] = useState<boolean>(true);
+  const [dataProducts, setDataProducts] = useState<DataItem[]>([]);
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Sesuaikan dengan jumlah item per halaman
-  // const [dataOriProductOrder, setDataOriProductOrder] = useState<Order[]>([]);
+  const itemsPerPage = 10;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productOrder, setProductOrder] = useState<Order | null>(null);
+  const [orderItemsParse, setOrderItemsParse] = useState<OrderItemsParseType[]>(
+    []
+  );
+
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const closeModal = () => setIsModalOpen(false);
 
   const listProducts = async (page = 1) => {
     const res = await handleOrders(page);
     if (res) {
-      // setDataOriProductOrder(res?.data?.data);
       const mappedData = mapOrdersToDataItems(
-        res?.data?.data,
+        res.data?.data || [],
         page,
         itemsPerPage
       );
       setDataProducts(mappedData);
-      setPagination(res?.data?.pagination);
+      setPagination(res.data?.pagination || null);
     }
-    // setLoading(false);
   };
 
-  const [productOrder, setProductOrder] = useState<Order | null>(null); // Sesuaikan tipe menjadi Order | null
-
-  // Fungsi untuk memetakan data order ke dalam format data table
   const mapOrdersToDataItems = (
     orders: Order[],
     currentPage: number,
@@ -75,20 +66,17 @@ const OrderContent: React.FC = () => {
       const onClickPay = () => window.open(snapUrl, "_blank");
       const handleDetail = (id: number) => {
         const selectedOrder = orders.find((data: Order) => data.id === id);
-
         if (selectedOrder) {
-          setProductOrder({ ...selectedOrder, id: selectedOrder.id });
+          setProductOrder(selectedOrder);
           openModal();
         } else {
-          console.warn("Order not found for id:", id); // Debugging log for case when order is not found
+          console.warn("Order not found for id:", id);
           setProductOrder(null);
         }
       };
 
-      // Nomor urut dinamis
       const id = (currentPage - 1) * itemsPerPage + (index + 1);
 
-      // Kondisi untuk tombol
       const action = order.status ? (
         <Button
           statusButton="custom"
@@ -120,7 +108,7 @@ const OrderContent: React.FC = () => {
       );
 
       return {
-        id: id.toString(), // Nomor urut sebagai string
+        id: id.toString(),
         Penerima: penerima,
         Total: total,
         "Status Pembayaran": statusPayment,
@@ -133,82 +121,80 @@ const OrderContent: React.FC = () => {
   useEffect(() => {
     listProducts(currentPage);
   }, [currentPage]);
-  // useEffect(() => {
-  //   dispatch(SET_ORDERPAGE({ data: dataOriProductOrder }));
-  // }, [dispatch, dataOriProductOrder]);
 
-  const [orderItemsParse, setOrderItemsParse] = useState({});
+  const [cartOrderProduct, setCartOrderProduct] = useState<CartType[]>([]);
   useEffect(() => {
     if (productOrder?.order_items) {
-      setOrderItemsParse(JSON.parse(productOrder?.order_items));
+      try {
+        const parsedOrderItems = JSON.parse(productOrder.order_items);
+        setOrderItemsParse(parsedOrderItems);
+        setCartOrderProduct(parsedOrderItems[0]);
+      } catch (error) {
+        console.error("Failed to parse order items", error);
+        setOrderItemsParse([]);
+      }
     }
   }, [productOrder]);
-  console.log("dataProducts", dataProducts);
+
+  console.log("dataPro", dataProducts);
   return (
     <>
       <Modal isOpen={isModalOpen} title="Detail Order" onClose={closeModal}>
         <section className="grid grid-rows-1 gap-4 items-start">
-          <section className="flex lg:items-end flex-col lg:flex-row  gap-4 ">
+          <section className="flex lg:items-end flex-col lg:flex-row gap-4">
             <h1 className="font-bold capitalize">Tujuan Pengiriman</h1>
             <hr className="flex-grow border border-green-600" />
           </section>
-          {productOrder && orderItemsParse ? (
+          {productOrder && orderItemsParse.length > 0 ? (
             <>
               <article className="flex-grow text-left space-y-2">
                 <section className="flex gap-2">
                   <h6 className="capitalize">{orderItemsParse[1]?.fullname}</h6>
-                  <span className=" font-normal">|</span>
+                  <span className="font-normal">|</span>
                   <span className="font-normal hover:!text-white">
                     {orderItemsParse[1]?.phone}
                   </span>
                 </section>
-                <p className="text-sm font-normal">{`${orderItemsParse[1]?.address} ${orderItemsParse[1]?.other}`}</p>
-                <p className="text-sm font-normal uppercase">{`${orderItemsParse[1]?.province?.name}, ${orderItemsParse[1]?.city?.name} ,${orderItemsParse[1]?.city?.postal_code}`}</p>
+                <p className="text-sm font-normal">{`${orderItemsParse[1]?.address} ${orderItemsParse[1]?.other ?? ""}`}</p>
+                <p className="text-sm font-normal uppercase">{`${orderItemsParse[1]?.province?.name ?? ""}, ${orderItemsParse[1]?.city?.name ?? ""}, ${orderItemsParse[1]?.city?.postal_code ?? ""}`}</p>
               </article>
 
-              {/* order items tampil dibawah ini */}
-              <section className="flex lg:items-end flex-col lg:flex-row  gap-4 mt-5">
+              <section className="flex lg:items-end flex-col lg:flex-row gap-4 mt-5">
                 <h1 className="font-bold capitalize">Daftar Produk</h1>
                 <hr className="flex-grow border border-green-600" />
               </section>
               <section className="grid grid-cols-1 lg:grid-cols-2 gap-2 space-y-10">
-                {orderItemsParse[0]?.length > 0 &&
-                  orderItemsParse[0]?.map(
-                    (item: CartType, indexItem: number) => (
-                      <article
-                        key={indexItem}
-                        className=" p-3 rounded shadow border-gray-200"
-                      >
-                        <div className="w-full">
-                          <img
-                            src={item.thumbnail}
-                            alt={`${item.title} Image`}
-                            className="h-full w-full max-w-52 max-h-52 rounded-md mx-auto"
-                          />
-                        </div>
-                        <div className="w-full">
-                          <p className="text-lg">{item.title}</p>
-                          <p className="text-green-600 text-xl mt-3 font-bold">
-                            {formatRupiah(item?.price)}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {item.weight} Gram
-                          </p>
-                        </div>
-                      </article>
-                    )
-                  )}
+                {cartOrderProduct?.map((item: CartType, indexItem: number) => (
+                  <article
+                    key={indexItem}
+                    className="p-3 rounded shadow border-gray-200"
+                  >
+                    <div className="w-full">
+                      <img
+                        src={item.thumbnail}
+                        alt={`${item.title} Image`}
+                        className="h-full w-full max-w-52 max-h-52 rounded-md mx-auto"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <p className="text-lg">{item.title}</p>
+                      <p className="text-green-600 text-xl mt-3 font-bold">
+                        {formatRupiah(item?.price)}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {item.weight} Gram
+                      </p>
+                    </div>
+                  </article>
+                ))}
               </section>
 
-              {/* order items tampil dibawah ini */}
-              <section className="flex lg:items-end flex-col lg:flex-row  gap-4 mt-5">
+              <section className="flex lg:items-end flex-col lg:flex-row gap-4 mt-5">
                 <h1 className="font-bold capitalize">Layanan Pengiriman</h1>
                 <hr className="flex-grow border border-green-600" />
               </section>
               {orderItemsParse[2] && (
-                <section
-                  className={`flex flex-col justify-between h-full p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700  bg-white text-gray-700`}
-                >
+                <section className="flex flex-col justify-between h-full p-6 border border-gray-200 rounded-lg shadow bg-white text-gray-700">
                   <div>
                     <p className="capitalize font-bold">
                       {orderItemsParse[2]?.service}
@@ -217,26 +203,33 @@ const OrderContent: React.FC = () => {
                       Detail :
                     </p>
                     <p className="text-sm text-wrap">
-                      {orderItemsParse[2]?.description}
+                      {orderItemsParse[2]?.description ??
+                        "Deskripsi tidak tersedia"}
                     </p>
                     <p className="text-sm text-wrap mt-3 font-semibold">
                       Estimasi Pengiriman :
                     </p>
                     <p className="text-sm text-wrap">
-                      {orderItemsParse[2]?.cost[0].etd} hari
+                      {orderItemsParse[2]?.cost?.[0]?.etd ??
+                        "Estimasi tidak tersedia"}{" "}
+                      hari
                     </p>
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-wrap font-semibold">Biaya :</p>
                     <p className="text-sm text-wrap">
-                      {formatRupiah(orderItemsParse[2]?.cost[0].value)}
+                      {/* {formatRupiah(orderItemsParse[2]?.cost?.[0]?.value ?? 0)} */}
+                      {formatRupiah(
+                        String(orderItemsParse[2]?.cost?.[0]?.value) ??
+                          String(0)
+                      )}
                     </p>
                   </div>
                 </section>
               )}
             </>
           ) : (
-            <p>Loading...</p>
+            <DefaultCard>No data available</DefaultCard>
           )}
         </section>
       </Modal>

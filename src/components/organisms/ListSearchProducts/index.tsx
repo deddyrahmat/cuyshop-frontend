@@ -1,9 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import {
-  handleProducts,
-  handleSearchProducts,
-} from "../../../services/products";
+import { handleSearchProducts } from "../../../services/products";
 import CardWithImage from "../../molecules/CardWithImage";
 import Pagination from "../../molecules/Pagination";
 import SkeletonCard from "../../atoms/SkeletonCard";

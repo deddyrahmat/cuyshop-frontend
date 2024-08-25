@@ -74,7 +74,7 @@ export const handleLogout = async () => {
         "content-type": "application/json",
       },
     };
-    const response = await ApiAuth.Logout(config);
+    await ApiAuth.Logout(config);
     // console.log("response", response);
     return {
       status: true,

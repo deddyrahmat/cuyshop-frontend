@@ -1,7 +1,7 @@
 import React from "react";
 
 interface TableRowProps {
-  rowData: Record<string, React.ReactNode>;
+  rowData: Record<string, React.ReactNode | string>; // Fleksibel untuk ReactNode dan string
   showActionColumn?: boolean;
 }
 
