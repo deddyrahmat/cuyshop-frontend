@@ -43,7 +43,7 @@ const FormCustomSelect: React.FC<SelectFieldProps> = ({
         onChange={onChange}
         isSearchable={isSearchable}
       />
-      {error && <div className="error">{error}</div>}
+      {error && <div className="text-red-700">{error}</div>}
     </div>
   );
 };

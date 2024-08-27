@@ -40,7 +40,7 @@ const FormRadio: React.FC<FormFieldProps> = ({
         isDisabled={isDisabled}
       />
       {formikTouched && formikError && (
-        <div className="text-danger mt-1">{formikError}</div>
+        <div className="text-red-700 mt-1">{formikError}</div>
       )}
     </div>
   );

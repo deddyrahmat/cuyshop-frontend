@@ -34,10 +34,10 @@ export const AuthSlice = createSlice({
       state.email = "";
       state.name = "";
     },
-    RESET_AUTH_STATE: () => initialState,
+    // RESET_AUTH_STATE: () => initialState,
   },
 });
 
-export const { USER_LOGIN, USER_LOGOUT, RESET_AUTH_STATE } = AuthSlice.actions;
+export const { USER_LOGIN, USER_LOGOUT } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

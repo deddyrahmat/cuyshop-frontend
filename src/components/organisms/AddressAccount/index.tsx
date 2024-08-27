@@ -139,6 +139,9 @@ const AddressAccount: React.FC = () => {
       let process;
 
       try {
+        if (listAddress?.length === 0) {
+          values.main = true;
+        }
         if (isEditMode && currentAddressId) {
           process = await handleupdateAddress(+currentAddressId, values);
         } else {
@@ -209,8 +212,8 @@ const AddressAccount: React.FC = () => {
       }
     });
   };
-
   useEffect(() => {
+    // console.log("listAddress", listAddress);
     dispatch(SET_ADDRESS({ data: listAddress }));
     dispatch(SET_PROVINCE({ province: listProvincies }));
   }, [dispatch, listAddress, listProvincies]);

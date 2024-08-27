@@ -15,7 +15,7 @@ import Button from "../../atoms/Button";
 import { CartSliceType } from "../../../types/containerTypes";
 import { handleLogout } from "../../../services/auth";
 import { toast } from "react-toastify";
-import { RESET_AUTH_STATE, USER_LOGOUT } from "../../../redux/authSlice";
+import { USER_LOGOUT } from "../../../redux/authSlice";
 import { RESET_ADDRESS_STATE } from "../../../redux/addressSlice";
 import { RESET_CART_STATE } from "../../../redux/cartSlice";
 import { useMediaQuery } from "react-responsive";
@@ -120,6 +120,10 @@ const Header: React.FC = () => {
       {/* VERSION MOBILE */}
       {isTabletOrMobile && (
         <nav className="container mx-auto flex justify-between items-center py-5 px-8 bg-white">
+          <FormSearch
+            classNames="lg:hidden flex ring-1 ring-green-700"
+            formik={formik}
+          />
           <Button
             onClick={() => setIsOpen(true)}
             className="text-green-700 rounded"
@@ -128,11 +132,6 @@ const Header: React.FC = () => {
           >
             <GiHamburgerMenu className="text-2xl" />
           </Button>
-
-          <FormSearch
-            classNames="lg:hidden flex ring-1 ring-green-700"
-            formik={formik}
-          />
 
           <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
             <ul className="space-y-2 font-medium">

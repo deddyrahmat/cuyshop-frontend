@@ -12,7 +12,7 @@ import Orders from "../pages/Orders";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Categories from "../pages/Categories";
-import Account from "../pages/account";
+// import Account from "../pages/account";
 import GuestRoute from "./GuestRoute";
 import PrivateRoute from "./PrivateRoute";
 import Search from "../pages/Search";

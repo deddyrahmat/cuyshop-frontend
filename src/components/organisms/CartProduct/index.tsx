@@ -34,8 +34,11 @@ import FormRadio from "../../molecules/FormRadio";
 import Skeleton from "../../atoms/Skeleton";
 import { AuthSliceType } from "../../../redux/authSlice";
 import { handleStorOrder } from "../../../services/order";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CartProduct: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userAuth = useAppSelector(
     (state: { auth: AuthSliceType }) => state.auth
@@ -54,8 +57,15 @@ const CartProduct: React.FC = () => {
   const [selectedAddress, setSelectedAddress] = useState<AddressValues>();
 
   useEffect(() => {
-    setSelectedAddress(dataAddress.find((addr: any) => addr.main === true));
-  }, [dataAddress]);
+    // setSelectedAddress(dataAddress.find((addr: any) => addr.main === 1));
+    if (dataAddress.length > 0) {
+      setSelectedAddress(dataAddress.find((addr: any) => addr.main === 1));
+    } else {
+      toast.warning("Silahkan tambahkan alamat");
+      navigate("/settings");
+    }
+  }, [dataAddress, navigate]);
+  // console.log("selectedAddress", selectedAddress);
 
   const formik = useFormik({
     initialValues: {
@@ -81,9 +91,10 @@ const CartProduct: React.FC = () => {
             selectedService,
           ]),
         });
-        console.log("resp?.data", resp?.data);
         if (resp?.data) {
-          window.open(resp?.data?.snap_url?.original?.snap_url, "_blank");
+          window.location.href = resp?.data?.data?.snap_url?.original?.snap_url;
+
+          // window.open(resp?.data?.data?.snap_url?.original?.snap_url);
         }
       }
 
@@ -159,6 +170,7 @@ const CartProduct: React.FC = () => {
     formik.setFieldValue("total", totalCost);
   }, [totalCost]);
 
+  console.log("dataCart", dataCart);
   return (
     <>
       <Modal isOpen={isModalOpen} title="Alamat" onClose={closeModal}>
@@ -273,7 +285,7 @@ const CartProduct: React.FC = () => {
                     </article>
                   </DefaultCard>
                 )}
-                <h3>Pesanan</h3>
+                <h3 className="font-medium mt-3 mb-2 ">Pesanan</h3>
                 <form
                   className="space-y-4 md:space-y-6"
                   onSubmit={formik.handleSubmit}

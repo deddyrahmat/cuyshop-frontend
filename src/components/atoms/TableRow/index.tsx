@@ -13,7 +13,7 @@ const TableRow: React.FC<TableRowProps> = ({
     <tr>
       {Object.keys(rowData).map((key) =>
         showActionColumn || key !== "Action" ? (
-          <td key={key} className="py-2 px-4 border capitalize">
+          <td key={key} className="py-2 px-6 border capitalize">
             {rowData[key]}
           </td>
         ) : null

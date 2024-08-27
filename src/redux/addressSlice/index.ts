@@ -24,7 +24,6 @@ export const AddressSlice = createSlice({
         data: Record<string, any>;
       }>
     ) => {
-      console.log("action.payload", action.payload);
       state.data = action.payload.data;
     },
     SET_PROVINCE: (
@@ -35,7 +34,11 @@ export const AddressSlice = createSlice({
     ) => {
       state.province = action.payload.province;
     },
-    RESET_ADDRESS_STATE: () => initialState,
+    RESET_ADDRESS_STATE: (state) => {
+      localStorage.removeItem("address");
+      state.data = {};
+      state.province = [];
+    },
   },
 });
 

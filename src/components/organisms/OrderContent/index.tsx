@@ -54,7 +54,13 @@ const OrderContent: React.FC = () => {
   ): DataItem[] => {
     return orders.map((order, index) => {
       const penerima = order?.address?.fullname || "";
-      const statusPayment = order.status || "";
+      const statusPayment = (
+        <p
+          className={`${order?.status === "success" ? "text-green-600" : "text-red-600"} font-medium`}
+        >
+          {order.status || ""}
+        </p>
+      );
       const dibeli = new Date(order.created_at).toLocaleDateString("id-ID", {
         day: "numeric",
         month: "long",
@@ -63,7 +69,7 @@ const OrderContent: React.FC = () => {
       const total = formatRupiah(order?.total_price || "0");
       const snapUrlObject = JSON.parse(order.snap_url.split("\r\n\r\n")[1]);
       const snapUrl = snapUrlObject.snap_url || "";
-      const onClickPay = () => window.open(snapUrl, "_blank");
+      const onClickPay = () => (window.location.href = snapUrl);
       const handleDetail = (id: number) => {
         const selectedOrder = orders.find((data: Order) => data.id === id);
         if (selectedOrder) {
@@ -77,25 +83,8 @@ const OrderContent: React.FC = () => {
 
       const id = (currentPage - 1) * itemsPerPage + (index + 1);
 
-      const action = order.status ? (
-        <Button
-          statusButton="custom"
-          type="button"
-          onClick={() => handleDetail(order?.id)}
-          className="mx-auto bg-green-400 text-white px-3 py-1 rounded text-xs"
-        >
-          Detail
-        </Button>
-      ) : (
-        <>
-          <Button
-            statusButton="custom"
-            type="button"
-            onClick={onClickPay}
-            className="mx-auto bg-yellow-600 text-white px-3 py-1 rounded text-xs"
-          >
-            Pay
-          </Button>
+      const action =
+        order.status === "success" ? (
           <Button
             statusButton="custom"
             type="button"
@@ -104,8 +93,26 @@ const OrderContent: React.FC = () => {
           >
             Detail
           </Button>
-        </>
-      );
+        ) : (
+          <section className="flex gap-2">
+            <Button
+              statusButton="custom"
+              type="button"
+              onClick={onClickPay}
+              className="mx-auto bg-yellow-600 text-white px-3 py-1 rounded text-xs"
+            >
+              Pay
+            </Button>
+            <Button
+              statusButton="custom"
+              type="button"
+              onClick={() => handleDetail(order?.id)}
+              className="mx-auto bg-green-400 text-white px-3 py-1 rounded text-xs"
+            >
+              Detail
+            </Button>
+          </section>
+        );
 
       return {
         id: id.toString(),
@@ -136,7 +143,6 @@ const OrderContent: React.FC = () => {
     }
   }, [productOrder]);
 
-  console.log("dataPro", dataProducts);
   return (
     <>
       <Modal isOpen={isModalOpen} title="Detail Order" onClose={closeModal}>
@@ -274,6 +280,11 @@ const OrderContent: React.FC = () => {
                 ))}
             </section>
           </>
+        )}
+        {isEmpty(dataProducts) && (
+          <p className="font-semibold text-lg lg:text-3xl text-center">
+            Data Not Found
+          </p>
         )}
         {!isEmpty(dataProducts) && (
           <section className="flex justify-center mt-8 lg:mt-10">
