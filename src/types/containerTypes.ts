@@ -1,3 +1,14 @@
+// ======================================
+// auth
+export interface AuthSliceType {
+  email: string;
+  id: number;
+  name: string;
+  role: string;
+  token: string;
+}
+
+// ======================================
 // products
 export interface ProductImage {
   id: number;
@@ -16,7 +27,34 @@ export interface Product {
   price: string;
   product_images: ProductImage[];
 }
+export interface ProductDataState {
+  data: Product[];
+  fetched: boolean;
+  isLoading: boolean;
+  pagination: PaginationData | null;
+}
 
+export interface ProductSliceType {
+  parentPage: string;
+  parentPageKey: string;
+  childPage: string;
+  childPageKey: string;
+  data: Record<string, ProductDataState>;
+}
+
+// ======================================
+// category
+export interface Category {
+  label: string;
+  href: string;
+}
+
+export interface CategorySliceType {
+  data: Category[];
+  fetched: boolean;
+}
+
+// ======================================
 // orders
 export interface Order {
   address: AddressValues;
@@ -39,15 +77,6 @@ export interface DataItem {
   Action: React.ReactNode;
 }
 
-// export interface DataItem {
-//   id: React.ReactNode;
-//   Penerima: React.ReactNode;
-//   Total: React.ReactNode;
-//   "Status Pembayaran": React.ReactNode;
-//   "Tanggal Pembelian": React.ReactNode;
-//   Action: React.ReactNode;
-// }
-
 export interface OrderItemsParseType {
   fullname: string;
   phone: string;
@@ -68,6 +97,7 @@ export interface OrderItemsParseType {
   }[]; // cost adalah array yang bisa berisi objek dengan etd dan value
 }
 
+// ======================================
 // pagination
 export interface PaginationLinks {
   url: string | null;
@@ -91,7 +121,12 @@ export interface PaginationData<T = any> {
   total: number;
   links: PaginationLinks[];
 }
+
+// ======================================
 // cart type
+export interface CartSliceReduxType {
+  data: Record<string, any>[];
+}
 
 export interface CartType {
   price?: string;
@@ -120,7 +155,14 @@ export interface ServiceOption {
   cost: Cost[];
 }
 
+// ======================================
 // address type
+
+export interface AddressSliceType {
+  data: Record<string, any>;
+  province: Record<string, any>[];
+}
+
 export interface ProvinceValues {
   id: string;
   name: string;
@@ -144,6 +186,7 @@ export interface AddressValues {
   location: string;
 }
 
+// ======================================
 // order type
 export interface OrderValues {
   total_price: number;

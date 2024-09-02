@@ -1,24 +1,13 @@
 import { createAsyncThunk, PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Product, PaginationData } from "../../types/containerTypes";
+import {
+  Product,
+  PaginationData,
+  ProductSliceType,
+  ProductDataState,
+} from "../../types/containerTypes";
 import { handleProducts } from "../../services/products";
 
-// Define initial state
-interface ProductDataState {
-  data: Product[];
-  fetched: boolean;
-  isLoading: boolean;
-  pagination: PaginationData | null;
-}
-
-interface ProductSlice {
-  parentPage: string;
-  parentPageKey: string;
-  childPage: string;
-  childPageKey: string;
-  data: Record<string, ProductDataState>;
-}
-
-const initialState: ProductSlice = {
+const initialState: ProductSliceType = {
   parentPage: "",
   parentPageKey: "",
   childPage: "",

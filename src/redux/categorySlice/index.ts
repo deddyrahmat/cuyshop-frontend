@@ -1,15 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Category, CategorySliceType } from "../../types/containerTypes";
 
 // Define a more specific type for the category
-interface Category {
-  label: string;
-  href: string;
-}
-
-export interface CategorySliceType {
-  data: Category[];
-  fetched: boolean;
-}
 
 const initialState: CategorySliceType = {
   data: [],

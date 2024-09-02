@@ -1,12 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { CartSliceReduxType } from "../../types/containerTypes";
 
-// Define a type for the slice state
-export interface CartSliceType {
-  data: Record<string, any>[];
-}
-
-const initialState: CartSliceType = {
+const initialState: CartSliceReduxType = {
   data: [],
 };
 

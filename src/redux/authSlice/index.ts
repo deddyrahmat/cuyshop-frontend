@@ -1,13 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-// Define a type for the slice state
-export interface AuthSliceType {
-  email: string;
-  id: number;
-  name: string;
-  role: string;
-  token: string;
-}
+import { AuthSliceType } from "../../types/containerTypes";
 
 const localAuth: any = localStorage.getItem("auth");
 const initialState: AuthSliceType = localAuth

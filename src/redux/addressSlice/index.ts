@@ -1,10 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { AddressSliceType } from "../../types/containerTypes";
 
 // Define a type for the slice state
-export interface AddressSliceType {
-  data: Record<string, any>;
-  province: Record<string, any>[];
-}
 
 const localAddress: any = localStorage.getItem("address");
 const initialState: AddressSliceType = localAddress
