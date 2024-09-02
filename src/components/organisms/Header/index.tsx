@@ -15,10 +15,14 @@ import Button from "../../atoms/Button";
 import { CartSliceType } from "../../../types/containerTypes";
 import { handleLogout } from "../../../services/auth";
 import { toast } from "react-toastify";
-import { USER_LOGOUT } from "../../../redux/authSlice";
+import { AuthSliceType, USER_LOGOUT } from "../../../redux/authSlice";
 import { RESET_ADDRESS_STATE } from "../../../redux/addressSlice";
 import { RESET_CART_STATE } from "../../../redux/cartSlice";
 import { useMediaQuery } from "react-responsive";
+import {
+  CategorySliceType,
+  SET_CATEGORIES,
+} from "../../../redux/categorySlice";
 
 interface Category {
   id: number;
@@ -35,10 +39,17 @@ const Header: React.FC = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1024px)" });
   const dispatch = useAppDispatch();
-  const { email } = useAppSelector((state: any) => state.auth);
+  const { email } = useAppSelector(
+    (state: { auth: AuthSliceType }) => state.auth
+  );
+
   const { data: dataCart } = useAppSelector(
     (state: { cart: CartSliceType }) => state.cart
   );
+  const { data: stateCategories, fetched } = useAppSelector(
+    (state: { category: CategorySliceType }) => state.category
+  );
+
   // const { data: dataCart } = useAppSelector((state: any) => state.cart);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -56,17 +67,16 @@ const Header: React.FC = () => {
   };
 
   const listMenuCategories = async () => {
-    const res = await handleCategories();
-    if (res) {
-      let dataMenu: DropdownMenu[] = [];
-      res?.data?.data.map(
-        (item: Category) =>
-          (dataMenu = [
-            ...dataMenu,
-            { label: item.name, href: `/kategori/${item.slug}` },
-          ])
-      );
-      setDataCategories(dataMenu);
+    if (!fetched) {
+      const res = await handleCategories();
+      if (res) {
+        const formattedData = res.data.data.map((item: Category) => ({
+          label: item.name,
+          href: `/kategori/${item.slug}`,
+        }));
+        // setDataCategories(formattedData);
+        dispatch(SET_CATEGORIES(formattedData));
+      }
     }
   };
 
@@ -76,7 +86,6 @@ const Header: React.FC = () => {
 
   const processLogout = async () => {
     const res = await handleLogout();
-    console.log("res", res);
     if (res?.status) {
       dispatch(USER_LOGOUT());
       dispatch(RESET_ADDRESS_STATE());
@@ -146,7 +155,7 @@ const Header: React.FC = () => {
                 </Button>
               </li>
               <li>
-                <Dropdown title="Kategori" items={dataCategories} />
+                <Dropdown title="Kategori" items={stateCategories} />
               </li>
               {isEmpty(email) ? (
                 <>
@@ -228,7 +237,7 @@ const Header: React.FC = () => {
               <li>
                 <Dropdown
                   title="Kategori"
-                  items={dataCategories}
+                  items={stateCategories}
                   isActive={isActive("/kategori")}
                 />
               </li>

@@ -84,7 +84,7 @@ const ListSearchProducts: React.FC = () => {
             ))}
       </section>
 
-      {dataProducts?.length === 0 && (
+      {dataProducts?.length === 0 && loading === false && (
         <p className="min-h-[40vh] text-center text-xl lg:text-3xl font-bold mt-10">
           Produk Tidak Ditemukan
         </p>

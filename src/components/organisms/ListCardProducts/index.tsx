@@ -1,67 +1,144 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { handleProducts } from "../../../services/products";
+import React, { useEffect, useState } from "react";
+import { createSelector } from "reselect";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import {
+  fetchProducts,
+  SET_CHILDPAGE,
+  SET_PARENTPAGE,
+} from "../../../redux/productSlice";
 import CardWithImage from "../../molecules/CardWithImage";
 import Pagination from "../../molecules/Pagination";
 import SkeletonCard from "../../atoms/SkeletonCard";
 import { isEmpty } from "../../../utils/array/CheckValueEmpty";
-import { PaginationData, Product } from "../../../types/containerTypes";
+import { Product, PaginationData } from "../../../types/containerTypes";
+import { useParams } from "react-router-dom";
 
-const ListCardProducts: React.FC = () => {
-  const [dataProducts, setDataProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [pagination, setPagination] = useState<PaginationData | null>(null);
+const selectProductData = (state: { product: { data: any } }) =>
+  state.product.data;
+const selectCurrentPageKey = (state: { product: { childPageKey: any } }) =>
+  state.product.childPageKey;
+
+const makeSelectProductData = createSelector(
+  [selectCurrentPageKey, selectProductData],
+  (currentPageKey, productData) => ({
+    allProducts: productData || {},
+    pageNow: currentPageKey || "",
+    data: productData[currentPageKey]?.data || [],
+    isLoading: productData[currentPageKey]?.isLoading || false,
+    fetched: productData[currentPageKey]?.fetched || false,
+    pagination: productData[currentPageKey]?.pagination || null,
+  })
+);
+
+interface ProductListProps {
+  slug?: string;
+}
+
+const ProductList: React.FC<ProductListProps> = ({ slug }) => {
+  const dispatch = useAppDispatch();
+
+  const params = useParams();
   const [currentPage, setCurrentPage] = useState(1);
+  const currentPageName = params.slug ?? "home";
 
-  const listProducts = async (page = 1) => {
-    const res = await handleProducts(page);
-    if (res) {
-      setDataProducts(res?.data?.data?.data);
-      setPagination(res?.data?.data);
-    }
-    setLoading(false);
-  };
+  const {
+    pageNow,
+    data: stateProducts,
+    isLoading,
+    fetched,
+    pagination,
+    allProducts,
+  } = useAppSelector(makeSelectProductData);
 
   useEffect(() => {
-    listProducts(currentPage);
-  }, [currentPage]);
+    // if (Object.keys(allProducts).includes(currentPageName) === false) {
+    if (!allProducts[currentPageName]) {
+      // Set Parent Page Data
+      dispatch(
+        SET_PARENTPAGE({
+          parentPage: params.slug ? "category" : "home",
+          parentPageKey: params.slug ? "category" : "home",
+        })
+      );
+
+      // Set Child Page Data
+      dispatch(
+        SET_CHILDPAGE({
+          childPage: params.slug ?? "home",
+          childPageKey: params.slug ?? "home",
+          data: {
+            data: [],
+            fetched: false,
+            isLoading: true,
+            pagination: null,
+          },
+        })
+      );
+
+      // Fetch Products
+      dispatch(
+        fetchProducts({
+          page: currentPage,
+          slug: params.slug ?? slug,
+        })
+      );
+    }
+  }, [dispatch, params.slug, currentPage]);
+
+  // Update Child Page Data with Fetched Products
+  useEffect(() => {
+    // if (Object.keys(allProducts).includes(currentPageName) && fetched) {
+    if (allProducts[currentPageName] && fetched) {
+      dispatch(
+        SET_CHILDPAGE({
+          childPage: params.slug ?? "home",
+          childPageKey: params.slug ?? "home",
+          data: {
+            data: allProducts[currentPageName]?.data, // Keep old data and add new data
+            fetched: true,
+            isLoading: false,
+            pagination: pagination, // Update if pagination is available
+          },
+        })
+      );
+    }
+  }, [dispatch, fetched, stateProducts, params.slug, pagination]);
 
   return (
     <section className="2xl:container 2xl:mx-auto py-5 px-8 2xl:px-1">
-      <section className="flex lg:items-end flex-col lg:flex-row  gap-4 mb-5">
-        <h1 className="font-bold capitalize">Produk Baru</h1>
-        <hr className="flex-grow border border-green-600" />
-      </section>
-      <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {loading
-          ? Array.from({ length: 4 }).map((_data, index) => (
-              <SkeletonCard key={index} />
-            ))
-          : dataProducts.map((product: Product) => (
-              <CardWithImage key={product.id} product={product} />
-            ))}
-      </section>
+      {isLoading && (
+        <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </section>
+      )}
 
-      {dataProducts?.length === 0 && (
+      {!isLoading && fetched && stateProducts.length > 0 && (
+        <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {stateProducts?.map((product: Product) => (
+            <CardWithImage key={product.id} product={product} />
+          ))}
+        </section>
+      )}
+
+      {!isLoading && stateProducts.length === 0 && (
         <p className="text-center text-xl lg:text-3xl font-bold mt-10">
           Produk Tidak Tersedia
         </p>
       )}
-      {!isEmpty(dataProducts) && (
+
+      {!isLoading && !isEmpty(stateProducts) && (
         <section className="flex justify-center mt-8 lg:mt-10">
-          {pagination &&
-            pagination?.from !== 1 &&
-            pagination?.last_page !== 1 && (
-              <Pagination
-                currentPage={pagination.current_page}
-                lastPage={pagination.last_page}
-                onPageChange={(page) => setCurrentPage(page)}
-              />
-            )}
+          <Pagination
+            currentPage={stateProducts?.pagination?.currentPage}
+            lastPage={stateProducts?.pagination?.last_page} // Assuming 10 items per page
+            onPageChange={(page) => setCurrentPage(page)}
+          />
         </section>
       )}
     </section>
   );
 };
 
-export default ListCardProducts;
+export default ProductList;

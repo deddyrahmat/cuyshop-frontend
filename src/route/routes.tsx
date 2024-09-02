@@ -11,7 +11,7 @@ import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Categories from "../pages/Categories";
+// import Categories from "../pages/Categories";
 // import Account from "../pages/account";
 import GuestRoute from "./GuestRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -44,10 +44,10 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/kategori/:kategoriId",
+    path: "/kategori/:slug",
     element: (
       <Suspense fallback={<Loading type="xl" />}>
-        <Categories />
+        <Home />
       </Suspense>
     ),
   },
