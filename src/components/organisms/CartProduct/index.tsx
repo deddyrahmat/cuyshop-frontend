@@ -14,7 +14,9 @@ import FormCustomSelect from "../../molecules/FormCustomSelect";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
+  AddressSliceType,
   AddressValues,
+  AuthSliceType,
   CartSliceType,
   CartType,
   ServiceOption,
@@ -28,11 +30,9 @@ import {
 } from "../../../redux/cartSlice";
 import DefaultCard from "../../molecules/DefaultCard";
 import Modal from "../../molecules/Modal";
-import { AddressSliceType } from "../../../redux/addressSlice";
 import { handleCheckShiping } from "../../../services/shipping";
 import FormRadio from "../../molecules/FormRadio";
 import Skeleton from "../../atoms/Skeleton";
-import { AuthSliceType } from "../../../redux/authSlice";
 import { handleStorOrder } from "../../../services/order";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

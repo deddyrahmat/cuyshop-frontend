@@ -12,7 +12,7 @@ const FormSearch: React.FC<TypeSearch> = ({ classNames, formik }) => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className={`w-9/12 md:w-4/12 lg:w-3/12 flex items-center lg:ml-auto ps-3 pe-3 p-2 gap-3 bg-white rounded-lg md:rounded-xl ${classNames} `}
+      className={`w-9/12 md:w-4/12 lg:w-3/12 flex items-center lg:ml-auto ps-3 pe-3 p-2 gap-3 bg-white rounded-lg md:rounded-xl ${classNames}`}
     >
       <Inputs
         type="search"

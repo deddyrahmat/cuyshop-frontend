@@ -1,99 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import Dropdown from "../../molecules/Dropdown";
 import Drawer from "../../molecules/Drawer";
 import FormSearch from "../../molecules/FormSearch";
-import { handleCategories } from "../../../services/categories";
-import { isEmpty } from "../../../utils/array/CheckValueEmpty";
 import Button from "../../atoms/Button";
-import { CartSliceType } from "../../../types/containerTypes";
-import { handleLogout } from "../../../services/auth";
-import { toast } from "react-toastify";
-import { AuthSliceType, USER_LOGOUT } from "../../../redux/authSlice";
-import { RESET_ADDRESS_STATE } from "../../../redux/addressSlice";
-import { RESET_CART_STATE } from "../../../redux/cartSlice";
-import { useMediaQuery } from "react-responsive";
-import {
-  CategorySliceType,
-  SET_CATEGORIES,
-} from "../../../redux/categorySlice";
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-interface DropdownMenu {
-  label: string;
-  href: string;
-}
+import useHeaderLogic from "./useHeaderLogic";
+import useResponsiveHeader from "./useResponsiveHeader";
 
 const Header: React.FC = () => {
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-  const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1024px)" });
-  const dispatch = useAppDispatch();
-  const { email } = useAppSelector(
-    (state: { auth: AuthSliceType }) => state.auth
-  );
+  const {
+    isOpen,
+    setIsOpen,
+    dataCart,
+    stateCategories,
+    email,
+    navigate,
+    processLogout,
+    isEmpty,
+  } = useHeaderLogic();
 
-  const { data: dataCart } = useAppSelector(
-    (state: { cart: CartSliceType }) => state.cart
-  );
-  const { data: stateCategories, fetched } = useAppSelector(
-    (state: { category: CategorySliceType }) => state.category
-  );
-
-  // const { data: dataCart } = useAppSelector((state: any) => state.cart);
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [dataCategories, setDataCategories] = useState<DropdownMenu[]>([]);
+  const { isTabletOrMobile, isDesktopOrLaptop } = useResponsiveHeader();
+  // const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+  // const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1024px)" });
 
   const isActive = (path: string) => {
-    // Jika path sama dengan '/'
     if (path === "/") {
-      // Cek jika pathname saat ini adalah '/'
       return location.pathname === "/";
     }
-
-    // Cek jika pathname saat ini dimulai dengan path yang diberikan
     return location.pathname.startsWith(path);
-  };
-
-  const listMenuCategories = async () => {
-    if (!fetched) {
-      const res = await handleCategories();
-      if (res) {
-        const formattedData = res.data.data.map((item: Category) => ({
-          label: item.name,
-          href: `/kategori/${item.slug}`,
-        }));
-        // setDataCategories(formattedData);
-        dispatch(SET_CATEGORIES(formattedData));
-      }
-    }
-  };
-
-  useEffect(() => {
-    listMenuCategories();
-  }, []);
-
-  const processLogout = async () => {
-    const res = await handleLogout();
-    if (res?.status) {
-      dispatch(USER_LOGOUT());
-      dispatch(RESET_ADDRESS_STATE());
-      dispatch(RESET_CART_STATE());
-
-      toast.success("Logout Berhasil");
-      navigate("/", { replace: true });
-    }
   };
 
   const formik = useFormik({
@@ -103,7 +41,7 @@ const Header: React.FC = () => {
     validationSchema: Yup.object({
       keyword: Yup.string().max(255, "Maximum 255 characters"),
     }),
-    onSubmit: (values: any) => {
+    onSubmit: (values) => {
       navigate(`/search/${values.keyword}`);
     },
   });
