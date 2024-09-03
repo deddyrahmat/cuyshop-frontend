@@ -8,6 +8,13 @@ export interface AuthSliceType {
   token: string;
 }
 
+export interface ValuesRegister {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
 // ======================================
 // products
 export interface ProductImage {

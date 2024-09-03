@@ -1,54 +1,12 @@
 import React from "react";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormField from "../../molecules/FormField";
 import Button from "../../atoms/Button";
-import { handleRegister } from "../../../services/auth";
-import { USER_LOGIN } from "../../../redux/authSlice";
-import { useAppDispatch } from "../../../redux/hooks";
+import useAuthRegister from "./useAuthRegister";
 
-interface ValuesRegister {
-  name: string;
-  email: string;
-  password: string;
-  password_confirmation: string;
-}
 const AuthRegister: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please input the field"),
-      email: Yup.string()
-        .email("check format email")
-        .required("Please input the field"),
-      password: Yup.string()
-        .min(6, "Minimum 6 characters")
-        .required("Please input the field"),
-      password_confirmation: Yup.string()
-        .oneOf([Yup.ref("password"), undefined], "Passwords must match")
-        .required("Please confirm your password"),
-    }),
-    onSubmit: async (values: ValuesRegister) => {
-      // console.log("first", values);
-      const process = await handleRegister(values);
-      console.log("process", process);
-      if (!process.status) {
-        toast.error(process.message);
-      }
-      dispatch(USER_LOGIN(process.data.data));
-      toast.success(process.message);
-      navigate("/", { replace: true });
-    },
-  });
+  const { formik } = useAuthRegister();
+
   return (
     <section className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-[50vh] lg:py-0">
       <section className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -68,13 +26,8 @@ const AuthRegister: React.FC = () => {
               type="text"
               value={formik.values.name}
               onChange={formik.handleChange}
-              // formikTouched={formik.touched.name}
               formikTouched={!!formik.touched.name}
-              formikError={
-                typeof formik.errors.name === "string"
-                  ? formik.errors.name
-                  : undefined
-              } // Konversi menjadi string atau undefined
+              formikError={formik.errors.name}
             />
             <FormField
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -84,13 +37,8 @@ const AuthRegister: React.FC = () => {
               type="email"
               value={formik.values.email}
               onChange={formik.handleChange}
-              // formikTouched={formik.touched.email}
               formikTouched={!!formik.touched.email}
-              formikError={
-                typeof formik.errors.email === "string"
-                  ? formik.errors.email
-                  : undefined
-              } // Konversi menjadi string atau undefined
+              formikError={formik.errors.email}
             />
             <FormField
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -100,13 +48,8 @@ const AuthRegister: React.FC = () => {
               type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
-              // formikTouched={formik.touched.password}
               formikTouched={!!formik.touched.password}
-              formikError={
-                typeof formik.errors.password === "string"
-                  ? formik.errors.password
-                  : undefined
-              } // Konversi menjadi string atau undefined
+              formikError={formik.errors.password}
             />
             <FormField
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -116,13 +59,8 @@ const AuthRegister: React.FC = () => {
               type="password"
               value={formik.values.password_confirmation}
               onChange={formik.handleChange}
-              // formikTouched={formik.touched.password_confirmation}
               formikTouched={!!formik.touched.password_confirmation}
-              formikError={
-                typeof formik.errors.password_confirmation === "string"
-                  ? formik.errors.password_confirmation
-                  : undefined
-              } // Konversi menjadi string atau undefined
+              formikError={formik.errors.password_confirmation}
             />
 
             <Button
