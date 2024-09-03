@@ -170,7 +170,6 @@ const CartProduct: React.FC = () => {
     formik.setFieldValue("total", totalCost);
   }, [totalCost]);
 
-  console.log("dataCart", dataCart);
   return (
     <>
       <Modal isOpen={isModalOpen} title="Alamat" onClose={closeModal}>
