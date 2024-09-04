@@ -101,6 +101,9 @@ export const useProductDetail = () => {
       title: "Sukses!",
       text: "Produk berhasil masuk ke keranjang!",
       icon: "success",
+      customClass: {
+        confirmButton: "customButtonSwal",
+      },
     });
   }, [product, imageUrl]);
 

@@ -1,174 +1,46 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { IoBagCheckOutline } from "react-icons/io5";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
-import { FaRegTrashAlt } from "react-icons/fa";
-
-import "react-18-image-lightbox/style.css"; // Pastikan Anda mengimpor stylesheet-nya
-// Import Swiper styles
+import { FaExchangeAlt, FaRegTrashAlt } from "react-icons/fa";
+import "react-18-image-lightbox/style.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import Button from "../../atoms/Button";
 import FormCustomSelect from "../../molecules/FormCustomSelect";
-import Swal from "sweetalert2";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import DefaultCard from "../../molecules/DefaultCard";
+import Modal from "../../molecules/Modal";
+import FormRadio from "../../molecules/FormRadio";
+import Skeleton from "../../atoms/Skeleton";
+import { formatRupiah } from "../../../utils/currency/Rupiah";
+import { useCartProductLogic } from "./useCartProductLogic";
 import {
-  AddressSliceType,
   AddressValues,
-  AuthSliceType,
-  CartSliceType,
   CartType,
   ServiceOption,
 } from "../../../types/containerTypes";
 import { isEmpty } from "../../../utils/array/CheckValueEmpty";
-import { formatRupiah } from "../../../utils/currency/Rupiah";
-import {
-  DECREMENT_ITEM,
-  INCREMENT_ITEM,
-  REMOVE_ITEM,
-} from "../../../redux/cartSlice";
-import DefaultCard from "../../molecules/DefaultCard";
-import Modal from "../../molecules/Modal";
-import { handleCheckShiping } from "../../../services/shipping";
-import FormRadio from "../../molecules/FormRadio";
-import Skeleton from "../../atoms/Skeleton";
-import { handleStorOrder } from "../../../services/order";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { handleImageError } from "../../../utils/image/OnError";
 
 const CartProduct: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const userAuth = useAppSelector(
-    (state: { auth: AuthSliceType }) => state.auth
-  );
-  const { data: dataCart } = useAppSelector(
-    (state: { cart: CartSliceType }) => state.cart
-  );
-
-  const { data: dataAddress } = useAppSelector(
-    (state: { address: AddressSliceType }) => state.address
-  );
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resultCourier, setResultCourier] = useState<ServiceOption[]>([]);
-  const [selectedService, setSelectedService] = useState<ServiceOption>();
-  const [selectedAddress, setSelectedAddress] = useState<AddressValues>();
-
-  useEffect(() => {
-    // setSelectedAddress(dataAddress.find((addr: any) => addr.main === 1));
-    if (dataAddress.length > 0) {
-      setSelectedAddress(dataAddress.find((addr: any) => addr.main === 1));
-    } else {
-      toast.warning("Silahkan tambahkan alamat");
-      navigate("/settings");
-    }
-  }, [dataAddress, navigate]);
-  // console.log("selectedAddress", selectedAddress);
-
-  const formik = useFormik({
-    initialValues: {
-      courier: "",
-      service: "",
-      total: 0,
-    },
-    validationSchema: Yup.object({
-      courier: Yup.string().required("Please input the field"),
-      service: Yup.string(),
-      total: Yup.number(),
-    }),
-    onSubmit: async () => {
-      if (selectedAddress && typeof selectedAddress.id === "number") {
-        const resp = await handleStorOrder({
-          fullname: userAuth?.name,
-          address: +selectedAddress?.id,
-          total_price: +totalCost,
-          email: userAuth?.email,
-          order_items: JSON.stringify([
-            dataCart,
-            selectedAddress,
-            selectedService,
-          ]),
-        });
-        if (resp?.data) {
-          window.location.href = resp?.data?.data?.snap_url?.original?.snap_url;
-
-          // window.open(resp?.data?.data?.snap_url?.original?.snap_url);
-        }
-      }
-
-      Swal.fire({
-        title: "Good job!",
-        text: "You clicked the button!",
-        icon: "success",
-      });
-    },
-  });
-
-  const kurirOptions = [
-    { value: "jne", label: "JNE" },
-    { value: "pos", label: "Pos Indonesia" },
-    { value: "tiki", label: "Tiki" },
-  ];
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleSelectedAddress = (id: number) => {
-    setSelectedAddress(dataAddress.find((addr: any) => addr.id === id));
-    closeModal();
-  };
-
-  const [isLoadingService, setIsLoadingService] = useState<boolean>(false);
-  const handleService = async (paramCourier: string) => {
-    setIsLoadingService(true);
-    const totalWeight = dataCart.reduce((accumulator, item) => {
-      // Mengakumulasi weight berdasarkan quantity
-      return accumulator + (item.weight ?? 0) * (item.total ?? 1);
-    }, 0);
-    const response = await handleCheckShiping({
-      destination: `${selectedAddress?.city_id}`,
-      weight: totalWeight,
-      courier: paramCourier,
-    });
-
-    setResultCourier(response?.data);
-    setIsLoadingService(false);
-  };
-
-  const handleGetDataService = (service: string) => {
-    const result = resultCourier.find(
-      (item: ServiceOption) => item.service === service
-    );
-    setSelectedService(result);
-  };
-
-  // sdfsd
-  // Total cost of items
-  const totalCostItem = useMemo(() => {
-    return dataCart.reduce((accumulator: number, item: CartType) => {
-      const price = parseFloat(item.price!);
-      return accumulator + price * item.total!;
-    }, 0);
-  }, [dataCart]);
-
-  // Total cost of the selected service
-  const totalCostService = useMemo(() => {
-    return selectedService?.cost[0]?.value ?? 0;
-  }, [selectedService]);
-
-  // Combined total cost
-  const totalCost = useMemo(() => {
-    return totalCostItem + totalCostService;
-  }, [totalCostItem, totalCostService]);
-
-  // Example effect to update Formik or other states
-  useEffect(() => {
-    formik.setFieldValue("total", totalCost);
-  }, [totalCost]);
+  const {
+    formik,
+    isModalOpen,
+    openModal,
+    closeModal,
+    dataAddress,
+    selectedAddress,
+    handleSelectedAddress,
+    kurirOptions,
+    isLoadingService,
+    resultCourier,
+    handleService,
+    handleGetDataService,
+    totalCost,
+    dataCart,
+    handleIncrement,
+    handleDecrement,
+    handleRemove,
+  } = useCartProductLogic();
 
   return (
     <>
@@ -214,101 +86,115 @@ const CartProduct: React.FC = () => {
           <>
             {/* side product */}
             <section className="w-full md:w-8/12 rounded-md space-y-4">
-              {!isEmpty(dataCart) &&
-                dataCart.length > 0 &&
-                dataCart.map((item: CartType, indexCart: number) => (
-                  <article
-                    key={indexCart}
-                    className="flex items-start gap-4 bg-white p-4 lg:p-6"
-                  >
-                    <div className="w-2/12">
-                      <img
-                        src={item.thumbnail}
-                        alt={`${item.title} Image`}
-                        className="h-full w-full max-w-52 max-h-52 rounded-md"
-                      />
-                    </div>
-                    <div className="w-7/12">
-                      <p className="text-lg">{item.title}</p>
-                      <p className="text-green-600 text-xl mt-3 font-bold">
-                        {formatRupiah(item?.price)}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {item.weight} Gram
-                      </p>
-                    </div>
-                    <div className="w-3/12 flex items-center gap-4">
+              {dataCart?.map((cart: CartType, cartIndex: number) => (
+                <section
+                  className="flex flex-col md:flex-row md:items-start  gap-4 p-4 lg:p-6 bg-white"
+                  key={cartIndex}
+                >
+                  <figure className="w-5/12 mx-auto lg:mx-0">
+                    <img
+                      src={cart.thumbnail}
+                      alt={`${cart.title} Image`}
+                      className="w-full h-full object-contain"
+                      onError={handleImageError}
+                    />
+                  </figure>
+                  <section className="flex flex-col justify-start items-start w-full">
+                    <h1 className="text-xl font-semibold line-clamp-2">
+                      {cart.title}
+                    </h1>
+                    <h2 className="text-sm font-semibold text-green-900">
+                      {formatRupiah(cart.price)}
+                    </h2>
+                    <p className="text-sm text-gray-500">{cart.weight} Gram</p>
+                  </section>
+                  <section className="flex items-center w-full md:w-4/12 pt-3 gap-6">
+                    <Button
+                      onClick={() => handleDecrement(cart.id!)}
+                      statusButton="custom"
+                      className="text-xl md:text-3xl cursor-pointer"
+                      type={"button"}
+                    >
+                      <CiCircleMinus size={24} />
+                    </Button>
+                    <p>{cart.total}</p>
+
+                    <Button
+                      onClick={() => handleIncrement(cart.id!)}
+                      statusButton="custom"
+                      className="text-xl md:text-3xl cursor-pointer"
+                      type={"button"}
+                    >
+                      <CiCirclePlus size={24} />
+                    </Button>
+                    <Button
+                      onClick={() => handleRemove(cart.id!)}
+                      statusButton="custom"
+                      className="text-xl md:text-3xl cursor-pointer"
+                      type={"button"}
+                    >
                       <FaRegTrashAlt
-                        className="text-xl md:text-2xl mr-5 text-red-800 cursor-pointer"
-                        onClick={() => dispatch(REMOVE_ITEM({ id: item.id! }))}
+                        size={24}
+                        className=" text-red-800 cursor-pointer"
                       />
-                      <CiCircleMinus
-                        className="text-xl md:text-3xl cursor-pointer"
-                        onClick={() =>
-                          dispatch(DECREMENT_ITEM({ id: item.id! }))
-                        }
-                      />
-                      <span className="text-xl">{item.total}</span>
-                      <CiCirclePlus
-                        className="text-xl md:text-3xl cursor-pointer"
-                        onClick={() =>
-                          dispatch(INCREMENT_ITEM({ id: item.id! }))
-                        }
-                      />
-                    </div>
-                  </article>
-                ))}
+                    </Button>
+                  </section>
+                </section>
+              ))}
             </section>
 
-            {/* side shiping */}
+            {/* side order */}
             <section className="w-full md:w-4/12 bg-white p-4 lg:p-6 rounded-md">
-              <article>
-                {!isEmpty(selectedAddress) && selectedAddress && (
-                  <DefaultCard
-                    onClick={() => {
-                      openModal();
-                    }}
-                  >
-                    <article className="flex-grow text-left space-y-2">
-                      <section className="flex gap-2">
-                        <h6 className="capitalize">
-                          {selectedAddress.fullname}
-                        </h6>
-                        <span className=" font-normal">|</span>
-                        <span className="font-normal hover:!text-white">
-                          {selectedAddress.phone}
-                        </span>
-                      </section>
-                      <p className="text-sm font-normal">{`${selectedAddress.address} ${selectedAddress.other}`}</p>
-                      <p className="text-sm font-normal uppercase">{`${selectedAddress?.province?.name}, ${selectedAddress?.city?.name} ,${selectedAddress?.city?.postal_code}`}</p>
-                    </article>
-                  </DefaultCard>
-                )}
-                <h3 className="font-medium mt-3 mb-2 ">Pesanan</h3>
-                <form
-                  className="space-y-4 md:space-y-6"
-                  onSubmit={formik.handleSubmit}
+              <h1 className="font-medium mt-2 mb-4 ">Ringkasan Belanja</h1>
+              {!isEmpty(selectedAddress) && selectedAddress && (
+                <DefaultCard
+                  onClick={() => {
+                    openModal();
+                  }}
                 >
-                  <FormCustomSelect
-                    label="Kurir"
-                    name="courier" // Sesuaikan dengan nama field dalam formik
-                    options={kurirOptions}
-                    value={formik.values.courier}
-                    onChange={(selectedOption: any) => {
-                      formik.setFieldValue("courier", selectedOption.value);
-                      handleService(selectedOption.value);
-                    }}
-                    isSearchable
-                  />
-                  {isLoadingService && <Skeleton />}
-                  {!isEmpty(resultCourier) &&
-                    resultCourier &&
-                    Array.isArray(resultCourier) && (
-                      <>
-                        <p className="font-semibold ">Pilihan Layanan</p>
-                        <article className="grid grid-cols-2 gap-4">
-                          {resultCourier.map(
-                            (courier: any, indexCourier: number) => (
+                  <article className="flex-grow text-left space-y-2 w-full">
+                    <section className="flex gap-2">
+                      <h6 className="capitalize">{selectedAddress.fullname}</h6>
+                      <span className=" font-normal">|</span>
+                      <span className="font-normal hover:!text-white">
+                        {selectedAddress.phone}
+                      </span>
+                    </section>
+                    <p className="text-sm font-normal">{`${selectedAddress.address} ${selectedAddress.other}`}</p>
+                    <p className="text-sm font-normal uppercase">{`${selectedAddress?.province?.name}, ${selectedAddress?.city?.name} ,${selectedAddress?.city?.postal_code}`}</p>
+                  </article>
+                  <div className="mt-5 flex gap-1 items-center">
+                    <FaExchangeAlt />
+                    <span className=" text-sm font-light">Ganti Tujuan</span>
+                  </div>
+                </DefaultCard>
+              )}
+              <h3 className="font-medium mt-3 mb-2 ">Pesanan</h3>
+              <form
+                onSubmit={formik.handleSubmit}
+                className="space-y-4 md:space-y-6"
+              >
+                <FormCustomSelect
+                  label="Kurir"
+                  name="courier"
+                  options={kurirOptions}
+                  value={formik.values.courier}
+                  onChange={(selectedOption: any) => {
+                    formik.setFieldValue("courier", selectedOption.value);
+                    handleService(selectedOption.value);
+                  }}
+                  isSearchable
+                />
+                <section>
+                  {isLoadingService ? (
+                    <Skeleton />
+                  ) : (
+                    <>
+                      <p className="font-semibold ">Pilihan Layanan</p>
+                      <article className="grid grid-cols-2 gap-4">
+                        {resultCourier?.length > 0 &&
+                          resultCourier?.map(
+                            (courier: ServiceOption, indexCourier: number) => (
                               <FormRadio
                                 key={indexCourier}
                                 placeholder="Nama Service"
@@ -359,33 +245,33 @@ const CartProduct: React.FC = () => {
                                       Biaya :
                                     </p>
                                     <p className="text-sm text-wrap">
-                                      {formatRupiah(courier?.cost[0].value)}
+                                      {formatRupiah(
+                                        String(courier?.cost[0].value)
+                                      )}
                                     </p>
                                   </div>
                                 </section>
                               </FormRadio>
                             )
                           )}
-                        </article>
-                      </>
-                    )}
-
-                  <p className="font-bold">
-                    Total Biaya : {formatRupiah(String(totalCost))}
-                  </p>
-                  <Button
-                    className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
-                    type="submit"
-                    statusButton="primary"
-                    // isDisabled={true}
-                  >
-                    <span>
-                      <IoBagCheckOutline className="text-xl" />
-                    </span>
-                    <span className="text-xl">Checkout</span>
-                  </Button>
-                </form>
-              </article>
+                      </article>
+                    </>
+                  )}
+                </section>
+                <p className="font-bold">
+                  Total Biaya : {formatRupiah(String(totalCost))}
+                </p>
+                <Button
+                  className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
+                  type="submit"
+                  statusButton="primary"
+                >
+                  <span>
+                    <IoBagCheckOutline className="text-xl" />
+                  </span>
+                  <span className="text-xl">Checkout</span>
+                </Button>
+              </form>
             </section>
           </>
         )}

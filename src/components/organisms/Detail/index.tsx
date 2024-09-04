@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import { useProductDetail } from "./useProductDetail";
 import { formatRupiah } from "../../../utils/currency/Rupiah";
 import SkeletonImage from "../../atoms/SkeletonImage";
+import { handleImageError } from "../../../utils/image/OnError";
 
 const Detail: React.FC = () => {
   const {
@@ -63,9 +64,10 @@ const Detail: React.FC = () => {
       <section className="w-full md:w-4/12 lg:w-3/12 bg-white p-4 lg:p-6">
         <img
           onClick={() => openModal(listPhotoIndex)}
-          className="p-8 rounded-t-lg mx-auto cursor-pointer h-full max-h-64 md:max-h-80"
+          className="p-8 rounded-t-lg mx-auto cursor-pointer h-full max-h-64 md:max-h-80 object-contain"
           src={imageUrl}
           alt="product image"
+          onError={handleImageError}
         />
 
         <section className="mt-4 relative p-0 m-0">
@@ -81,7 +83,8 @@ const Detail: React.FC = () => {
                 <img
                   src={`${import.meta.env.VITE_URL_PUBLIC_STORAGE}/${item.image[0]}`}
                   onClick={() => setListPhotoIndex(index)}
-                  className="rounded-lg h-24 md:h-28 w-full"
+                  className="rounded-lg h-24 md:h-28 w-full object-contain"
+                  onError={handleImageError}
                 />
               </SwiperSlide>
             ))}
@@ -104,7 +107,7 @@ const Detail: React.FC = () => {
         <div className="mt-4">
           <button
             onClick={handleCart}
-            className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+            className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
           >
             <FaShoppingCart className="mr-2" />
             Add to cart
