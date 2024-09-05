@@ -45,7 +45,7 @@ const ProductList: React.FC = () => {
           <Pagination
             currentPage={pagination?.currentPage || currentPage}
             lastPage={pagination?.last_page || 1}
-            onPageChange={setCurrentPage}
+            onPageChange={(page) => setCurrentPage(page)}
           />
         </section>
       )}
