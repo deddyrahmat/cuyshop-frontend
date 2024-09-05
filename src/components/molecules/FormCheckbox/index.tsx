@@ -4,11 +4,10 @@ import Inputs from "../../atoms/Inputs";
 
 interface FormCheckboxProps {
   label: string;
-  placeholder?: string;
   unique: string;
   className: string;
   isDisabled?: boolean;
-  value: boolean;
+  checked: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   formikTouched?: boolean;
   formikError?: string;
@@ -16,11 +15,10 @@ interface FormCheckboxProps {
 
 const FormCheckbox: React.FC<FormCheckboxProps> = ({
   label,
-  placeholder,
   unique,
   className,
   isDisabled = false,
-  value,
+  checked,
   onChange,
   formikTouched,
   formikError,
@@ -36,13 +34,13 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
         type="checkbox"
         id={unique}
         className={className}
-        placeholder={placeholder}
-        value={value}
+        checked={checked} // Gunakan `checked` untuk checkbox
         onChange={onChange}
         isDisabled={isDisabled}
+        value={""}
       />
       {formikTouched && formikError && (
-        <div className="text-danger mt-1">{formikError}</div>
+        <div className="text-red-500 mt-1">{formikError}</div> // Perbaiki kelas CSS untuk error
       )}
     </div>
   );

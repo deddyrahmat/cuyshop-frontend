@@ -10,12 +10,10 @@ interface InputProps {
   isDisabled?: boolean;
   name?: string; // Optional for radio buttons
   checked?: boolean; // Tambahkan ini untuk mendukung prop checked
-  onFocus?: () => void; // Tambahkan properti onFocus
-  onBlur?: () => void; // Tambahkan properti onBlur
 }
 
 const Inputs: React.FC<InputProps> = ({
-  type = "text",
+  type,
   placeholder,
   id,
   className,
@@ -30,6 +28,7 @@ const Inputs: React.FC<InputProps> = ({
     className,
     onChange,
     disabled: isDisabled,
+    name,
   };
 
   if (type === "checkbox" || type === "radio") {
@@ -38,7 +37,6 @@ const Inputs: React.FC<InputProps> = ({
         type={type}
         {...commonProps}
         checked={checked} // Gunakan prop checked di sini
-        name={name} // Include name for radio buttons
       />
     );
   }
