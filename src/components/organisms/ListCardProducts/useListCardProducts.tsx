@@ -31,7 +31,7 @@ export const useProductList = (slug?: string) => {
   const dispatch = useAppDispatch();
   const params = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const currentPageName = params.slug ?? "home";
+  const currentPageName = `${params.slug ?? "home"}_${currentPage}`; // Buat key berdasarkan slug dan halaman
 
   const {
     pageNow,
@@ -42,6 +42,12 @@ export const useProductList = (slug?: string) => {
     allProducts,
   } = useAppSelector(makeSelectProductData);
 
+  useEffect(() => {
+    // Set currentPage to 1 whenever slug changes
+    setCurrentPage(1);
+  }, [params.slug]);
+
+  // Lakukan fetch hanya jika data untuk halaman tertentu belum ada di Redux
   useEffect(() => {
     if (!allProducts[currentPageName]) {
       dispatch(
@@ -54,7 +60,7 @@ export const useProductList = (slug?: string) => {
       dispatch(
         SET_CHILDPAGE({
           childPage: params.slug ?? "home",
-          childPageKey: params.slug ?? "home",
+          childPageKey: currentPageName, // Simpan key dengan halaman
           data: {
             data: [],
             fetched: false,
@@ -78,17 +84,24 @@ export const useProductList = (slug?: string) => {
       dispatch(
         SET_CHILDPAGE({
           childPage: params.slug ?? "home",
-          childPageKey: params.slug ?? "home",
+          childPageKey: currentPageName,
           data: {
             data: allProducts[currentPageName]?.data,
             fetched: true,
             isLoading: false,
-            pagination: pagination,
+            pagination: allProducts[currentPageName]?.pagination,
           },
         })
       );
     }
-  }, [dispatch, fetched, stateProducts, params.slug, pagination]);
+  }, [
+    dispatch,
+    fetched,
+    stateProducts,
+    params.slug,
+    pagination,
+    currentPageName,
+  ]);
 
   return {
     stateProducts,

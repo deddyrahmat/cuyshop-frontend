@@ -35,7 +35,7 @@ const ProductList: React.FC = () => {
       )}
 
       {!isLoading && stateProducts.length === 0 && (
-        <p className="text-center text-xl lg:text-3xl font-bold mt-10">
+        <p className="text-center text-xl lg:text-3xl font-bold mt-10 min-h-[55vh]">
           Produk Tidak Tersedia
         </p>
       )}
