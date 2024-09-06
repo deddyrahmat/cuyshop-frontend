@@ -10,7 +10,7 @@ import useProductsSearch from "./useProductsSearch";
 const ListSearchProducts: React.FC = () => {
   const { keyword } = useParams();
   const { dataProducts, loading, pagination, currentPage, setCurrentPage } =
-    useProductsSearch(keyword, 1);
+    useProductsSearch(keyword, 10);
 
   return (
     <section className="2xl:container 2xl:mx-auto py-5 px-8 2xl:px-1">
