@@ -1,10 +1,5 @@
 import { createAsyncThunk, PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {
-  Product,
-  PaginationData,
-  ProductSliceType,
-  ProductDataState,
-} from "../../types/containerTypes";
+import { ProductSliceType, ProductDataState } from "../../types/containerTypes";
 import { handleProducts } from "../../services/products";
 
 const initialState: ProductSliceType = {

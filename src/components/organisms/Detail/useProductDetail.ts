@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { useAppDispatch } from "../../../redux/hooks";
 import { SET_CARTPAGE } from "../../../redux/cartSlice";
 import { handleDetailProduct } from "../../../services/products";
-import { formatRupiah } from "../../../utils/currency/Rupiah";
 
 interface Product {
   id: number;

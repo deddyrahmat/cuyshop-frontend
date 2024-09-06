@@ -6,7 +6,7 @@ export default function PrivateRoute({ children }: any) {
     return state.auth;
   });
 
-  if (!token && role !== "USER") return <Navigate to="/login" replace />;
+  if (!token || role !== "USER") return <Navigate to="/login" replace />;
 
   return children || <Outlet />;
 }

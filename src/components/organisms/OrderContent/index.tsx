@@ -19,7 +19,6 @@ const OrderContent: React.FC = () => {
     cartOrderProduct,
     dataProducts,
     pagination,
-    currentPage,
     isModalOpen,
     productOrder,
     orderItemsParse,

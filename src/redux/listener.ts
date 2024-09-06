@@ -1,8 +1,7 @@
 // import { setAuthToken } from "../config/Axios";
 import storeRedux from "./store";
-import { AuthSliceType } from "./authSlice/index"; // Pastikan tipe diimpor dengan benar
 import { setAuthToken } from "../config/Axios";
-import { AddressSliceType } from "./addressSlice";
+import { AddressSliceType, AuthSliceType } from "../types/containerTypes";
 
 let currentAuth: AuthSliceType = storeRedux.getState().auth;
 let currentAddress: AddressSliceType = storeRedux.getState().address;

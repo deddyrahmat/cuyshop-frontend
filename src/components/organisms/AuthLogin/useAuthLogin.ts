@@ -41,6 +41,10 @@ const useAuthLogin = () => {
     onSubmit: async (values) => {
       const process = await handleLogin(values);
       if (process.status) {
+        if (process?.data?.data?.role === "ADMIN") {
+          toast.error("Please check your account");
+          return navigate("/login", { replace: true });
+        }
         dispatch(USER_LOGIN(process.data.data));
         await getListAddresses();
         toast.success(process.message);

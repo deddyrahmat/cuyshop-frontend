@@ -86,7 +86,7 @@ export const handleListAddresses = async () => {
     }
     const addresses = response?.data?.data?.map((address: AddressValues) => ({
       ...address,
-      main: address.main === 1 ? true : false, // Convert 1 to true and 0 to false
+      main: address.main,
     }));
 
     return {

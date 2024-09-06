@@ -34,7 +34,6 @@ export const useProductList = (slug?: string) => {
   const currentPageName = `${params.slug ?? "home"}_${currentPage}`; // Buat key berdasarkan slug dan halaman
 
   const {
-    pageNow,
     data: stateProducts,
     isLoading,
     fetched,

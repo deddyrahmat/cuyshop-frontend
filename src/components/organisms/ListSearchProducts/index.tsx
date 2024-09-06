@@ -9,7 +9,7 @@ import useProductsSearch from "./useProductsSearch";
 
 const ListSearchProducts: React.FC = () => {
   const { keyword } = useParams();
-  const { dataProducts, loading, pagination, currentPage, setCurrentPage } =
+  const { dataProducts, loading, pagination, setCurrentPage } =
     useProductsSearch(keyword, 10);
 
   return (
