@@ -59,7 +59,7 @@ const CategoryMenu: React.FC = () => {
 
   useEffect(() => {
     const listProducts = async (page = 1) => {
-      const res = await handleProducts(page, params.kategoriId);
+      const res = await handleProducts(page, params.kategoriId, 8);
       if (res) {
         setDataProducts(res?.data?.data?.data);
         setPagination(res?.data?.data);
