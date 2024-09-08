@@ -8,6 +8,7 @@ interface DropdownProps {
   items: { label: string; href: string }[];
   multi?: boolean;
   isActive?: boolean;
+  onCloseDrawer?: () => void; // Tambahkan prop ini
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -15,6 +16,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   items,
   multi = false,
   isActive = false,
+  onCloseDrawer, // Tambahkan prop ini
 }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +33,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const handleItemClick = (href: string) => {
     navigate(href);
     setIsOpen(false); // Close dropdown on item click
+    if (onCloseDrawer) onCloseDrawer(); // Panggil onCloseDrawer jika ada
   };
 
   return (

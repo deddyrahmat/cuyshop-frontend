@@ -32,6 +32,8 @@ export interface Product {
   slug: string;
   description: string;
   price: string;
+  weight?: number;
+  category?: { name: string };
   product_images: ProductImage[];
 }
 export interface ProductDataState {
@@ -47,6 +49,11 @@ export interface ProductSliceType {
   childPage: string;
   childPageKey: string;
   data: Record<string, ProductDataState>;
+}
+
+export interface ImageItem {
+  image: string[];
+  display_order: number;
 }
 
 // ======================================

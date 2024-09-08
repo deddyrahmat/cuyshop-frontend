@@ -19,7 +19,6 @@ interface Product {
   description: string;
   price: string;
   product_images: ProductImage[];
-  // Tambahkan properti lain yang diperlukan
 }
 
 interface CardProps {
@@ -31,33 +30,31 @@ const CardWithImage: React.FC<CardProps> = ({ product }) => {
     (image: ProductImage) => image.display_order === 1
   );
   const imageUrl = mainImage?.image[0]
-    ? `${import.meta.env.VITE_URL_PUBLIC_STORAGE}/${mainImage.image[0]}`
+    ? `${import.meta.env.VITE_URL_PUBLIC_STORAGE}/${Array.isArray(mainImage?.image) ? mainImage.image[0] : mainImage?.image}`
     : "/image/no-image.png";
 
   return (
-    <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      {/* <a href={`/product/${product.slug}`}> */}
+    <div className="w-full bg-white border border-gray-200 rounded-lg shadow flex flex-col justify-between min-h-[400px]">
       <Link to={`/product/${product.slug}`}>
         <img
-          className="p-8 rounded-t-lg mx-auto"
+          className="rounded-t-lg mx-auto object-contain h-auto max-h-60 w-full pt-4 pb-3"
           src={imageUrl}
           alt={`${product.title} image`}
         />
       </Link>
-      {/* </a> */}
-      <div className="px-5 pb-5">
-        <Link to={`/product/${product.slug}`}>
-          {/* <a href={`/product/${product.slug}`}> */}
-          <h5 className="line-clamp-2 text-md md:text-lg lg:text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {product.title}
-          </h5>
-        </Link>
-        {/* </a> */}
-        <div className="line-clamp-3 text-sm text-gray-700 dark:text-gray-300 mt-3 mb-4">
-          {parse(product.description)}
+      <div className="px-5 pb-5 flex flex-col flex-grow justify-between">
+        <div>
+          <Link to={`/product/${product.slug}`}>
+            <h5 className="line-clamp-2 text-md md:text-lg lg:text-xl font-semibold tracking-tight text-gray-900 ">
+              {product.title}
+            </h5>
+          </Link>
+          <div className="line-clamp-3 text-sm text-gray-700 mt-3 mb-4">
+            {parse(product.description)}
+          </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm lg:text-lg font-bold text-gray-500 dark:text-white">
+          <span className="text-sm lg:text-lg font-bold text-gray-500 ">
             {formatRupiah(product.price)}
           </span>
         </div>

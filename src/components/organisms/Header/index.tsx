@@ -93,7 +93,11 @@ const Header: React.FC = () => {
                 </Button>
               </li>
               <li>
-                <Dropdown title="Kategori" items={stateCategories} />
+                <Dropdown
+                  title="Kategori"
+                  items={stateCategories}
+                  onCloseDrawer={() => setIsOpen(false)}
+                />
               </li>
               {isEmpty(email) ? (
                 <>
@@ -190,7 +194,7 @@ const Header: React.FC = () => {
               </Button>
             </li> */}
             </ul>
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:border-gray-700">
               {isEmpty(email) ? (
                 <>
                   <li>

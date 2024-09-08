@@ -103,6 +103,7 @@ export const useProductList = (slug?: string) => {
   ]);
 
   return {
+    params,
     stateProducts,
     isLoading,
     fetched,

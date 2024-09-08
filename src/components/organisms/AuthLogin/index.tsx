@@ -9,9 +9,9 @@ const AuthLogin: React.FC = () => {
 
   return (
     <section className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-[50vh] lg:py-0">
-      <section className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <section className="w-full bg-white rounded-lg shadow  sm:max-w-md xl:p-0 `` ``">
         <section className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
             Login to your account
           </h1>
           <form
@@ -19,7 +19,7 @@ const AuthLogin: React.FC = () => {
             onSubmit={formik.handleSubmit}
           >
             <FormField
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               label="Email"
               placeholder="Email"
               unique="email"
@@ -30,7 +30,7 @@ const AuthLogin: React.FC = () => {
               formikError={formik.errors.email}
             />
             <FormField
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               label="Password"
               placeholder="Password"
               unique="password"
@@ -41,14 +41,14 @@ const AuthLogin: React.FC = () => {
               formikError={formik.errors.password}
             />
 
-            <section className="flex items-center justify-between">
+            {/* <section className="flex items-center justify-between">
               <a
                 href="http://google.com"
-                className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                className="text-sm font-medium text-primary-600 hover:underline "
               >
                 Forgot password?
               </a>
-            </section>
+            </section> */}
             <Button
               className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
               type="submit"
@@ -56,11 +56,11 @@ const AuthLogin: React.FC = () => {
             >
               Login
             </Button>
-            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+            <p className="text-sm font-light text-gray-500 ">
               Don’t have an account yet?{" "}
               <Link
                 to="/register"
-                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                className="font-medium text-primary-600 hover:underline "
               >
                 Register
               </Link>

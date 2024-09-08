@@ -14,7 +14,7 @@ const initialState: ProductSliceType = {
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async ({ page = 1, slug }: { page?: number; slug?: string }) => {
-    const response = await handleProducts(page, slug);
+    const response = await handleProducts(page, slug, 8);
     return response.data; // Pastikan data sesuai dengan struktur yang diharapkan
   }
 );

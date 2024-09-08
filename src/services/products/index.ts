@@ -3,6 +3,7 @@ import ApiProducts from "../../config/Endpoints/product";
 interface Params {
   page?: number;
   category_slug?: string;
+  totalShow?: number;
 }
 
 interface ParamsSearch {
@@ -13,7 +14,8 @@ interface ParamsSearch {
 
 export const handleProducts = async (
   position: number,
-  category: string | undefined = ""
+  category: string | undefined = "",
+  totalShow: number
 ) => {
   try {
     const params: Params = {};
@@ -22,6 +24,9 @@ export const handleProducts = async (
     }
     if (category) {
       params.category_slug = category;
+    }
+    if (totalShow) {
+      params.totalShow = totalShow;
     }
     const config = {
       params,

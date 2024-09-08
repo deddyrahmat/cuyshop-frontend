@@ -1,29 +1,36 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useAppDispatch } from "../../../redux/hooks";
 import { SET_CARTPAGE } from "../../../redux/cartSlice";
 import { handleDetailProduct } from "../../../services/products";
+import { ImageItem, Product } from "../../../types/containerTypes";
 
-interface Product {
-  id: number;
-  price: number;
-  title: string;
-  slug: string;
-  weight: number;
-  description: string;
-  category: { name: string };
-  product_images: ImageItem[];
-}
+// interface Product {
+//   id: number;
+//   price: number;
+//   title: string;
+//   slug: string;
+//   weight: number;
+//   description: string;
+//   category: { name: string };
+//   product_images: ImageItem[];
+// }
 
-interface ImageItem {
-  image: string[];
-  display_order: number;
-}
+// interface ImageItem {
+//   image: string[];
+//   display_order: number;
+// }
 
 export const useProductDetail = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1); // kembali ke halaman sebelumnya
+  };
 
   const [product, setProduct] = useState<Product | null>(null);
   const [items, setItems] = useState<ImageItem[]>([]);
@@ -78,9 +85,15 @@ export const useProductDetail = () => {
 
   const imageUrl = useMemo(() => {
     const mainImage = items[listPhotoIndex];
-    // Ambil elemen pertama dari array `image`, atau gunakan fallback "/image/no-image.png" jika kosong
-    return mainImage?.image[0]
-      ? `${import.meta.env.VITE_URL_PUBLIC_STORAGE}/${mainImage.image[0]}`
+
+    // Tentukan imageSrc: jika array, ambil elemen pertama; jika string, gunakan string
+    const imageSrc = Array.isArray(mainImage?.image)
+      ? mainImage.image[0]
+      : mainImage?.image;
+
+    // Gunakan imageSrc atau fallback ke "/image/no-image.png"
+    return imageSrc
+      ? `${import.meta.env.VITE_URL_PUBLIC_STORAGE}/${imageSrc}`
       : "/image/no-image.png";
   }, [items, listPhotoIndex]);
 
@@ -116,7 +129,12 @@ export const useProductDetail = () => {
     }
   }, [cartProduct, dispatch]);
 
+  useEffect(() => {
+    window.global = window as never;
+  }, []);
+
   return {
+    handleGoBack,
     product,
     items,
     isOpen,

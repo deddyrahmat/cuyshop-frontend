@@ -58,6 +58,9 @@
 
 .swiper-button-prev,
 .swiper-button-next {
-  background-color: rgba(107, 114, 128, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 13px;
+  color: rgb(0, 247, 0) !important;
+  font-size: 13px !important;
+  font-weight: bold !important;
 }

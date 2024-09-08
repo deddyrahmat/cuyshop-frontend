@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
         <article className=" w-full">
           <h2 className="text-lg lg:text-xl font-bold">Metode Pembayaran</h2>
           <hr className="mt-2 mb-3 border-2 border-gray-300" />
-          <section className="grid grid-cols-3 gap-4 ">
+          <section className="grid grid-cols-3 space-y-3">
             <div>
               <img
                 src="/image/payments/BCA.png"
@@ -32,6 +32,27 @@ const Footer: React.FC = () => {
               <img
                 src="/image/payments/BRI.png"
                 alt="BRI"
+                className="w-32 lg:w-20 object-contain "
+              />
+            </div>
+            <div>
+              <img
+                src="/image/payments/alfamart.png"
+                alt="ALFAMART"
+                className="w-32 lg:w-20 object-contain "
+              />
+            </div>
+            <div>
+              <img
+                src="/image/payments/indomaret.png"
+                alt="INDOMARET"
+                className="w-32 lg:w-20 object-contain "
+              />
+            </div>
+            <div>
+              <img
+                src="/image/payments/qris.png"
+                alt="QRIS"
                 className="w-32 lg:w-20 object-contain "
               />
             </div>
