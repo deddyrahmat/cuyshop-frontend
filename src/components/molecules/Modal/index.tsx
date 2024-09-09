@@ -19,7 +19,7 @@ const Modal: FC<ModalProps> = ({ isOpen, title, children, onClose }) => {
 
   const handleClose = () => {
     setShowModal(false);
-    setTimeout(onClose, 50); // Delay close untuk memberikan waktu pada animasi
+    setTimeout(onClose, 75); // Delay close untuk memberikan waktu pada animasi dan ini sesuai dengan duration-75 dibawah
   };
 
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -32,13 +32,13 @@ const Modal: FC<ModalProps> = ({ isOpen, title, children, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${
+      className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 transition-opacity duration-75 ease-in-out ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
       onClick={handleClickOutside}
     >
       <div
-        className={`relative w-full max-w-2xl p-4 transition-transform transform-gpu duration-300 ease-in-out ${
+        className={`relative w-full max-w-2xl p-4 transition-transform transform-gpu duration-75 ease-in-out ${
           isOpen ? "scale-100" : "scale-95"
         }`}
       >

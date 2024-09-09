@@ -35,7 +35,7 @@ const CardWithImage: React.FC<CardProps> = ({ product }) => {
 
   return (
     <div className="w-full bg-white border border-gray-200 rounded-lg shadow flex flex-col justify-between min-h-[400px]">
-      <Link to={`/product/${product.slug}`}>
+      <Link to={`/produk/${product.slug}`}>
         <img
           className="rounded-t-lg mx-auto object-contain h-auto max-h-60 w-full pt-4 pb-3"
           src={imageUrl}
@@ -44,7 +44,7 @@ const CardWithImage: React.FC<CardProps> = ({ product }) => {
       </Link>
       <div className="px-5 pb-5 flex flex-col flex-grow justify-between">
         <div>
-          <Link to={`/product/${product.slug}`}>
+          <Link to={`/produk/${product.slug}`}>
             <h5 className="line-clamp-2 text-md md:text-lg lg:text-xl font-semibold tracking-tight text-gray-900 ">
               {product.title}
             </h5>

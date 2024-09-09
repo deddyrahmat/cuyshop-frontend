@@ -57,7 +57,7 @@ export const handleRegister = async ({
     const response = await ApiAuth.Register(body, config);
     return {
       status: true,
-      message: "Register successful, please login",
+      message: "Register successfully",
       data: response.data,
     };
   } catch (error: any) {

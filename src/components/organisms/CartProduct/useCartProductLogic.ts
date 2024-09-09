@@ -46,7 +46,7 @@ export const useCartProductLogic = () => {
       setSelectedAddress(dataAddress.find((addr: any) => addr.main === 1));
     } else {
       toast.warning("Silahkan tambahkan alamat");
-      navigate("/settings");
+      navigate("/pengaturan");
     }
   }, [dataAddress, navigate]);
 
@@ -61,8 +61,12 @@ export const useCartProductLogic = () => {
       service: Yup.string(),
       total: Yup.number(),
     }),
-    onSubmit: async () => {
-      if (selectedAddress && typeof selectedAddress.id === "number") {
+    onSubmit: async (_values, { setSubmitting }) => {
+      if (
+        selectedAddress &&
+        typeof selectedAddress.id === "number" &&
+        selectedService !== undefined
+      ) {
         const resp = await handleStorOrder({
           fullname: userAuth?.name,
           address: +selectedAddress?.id,
@@ -77,15 +81,26 @@ export const useCartProductLogic = () => {
         if (resp?.data) {
           window.location.href = resp?.data?.data?.snap_url?.original?.snap_url;
         }
+        Swal.fire({
+          title: "Selamat",
+          text: "Checkout berhasil dilakukan",
+          icon: "success",
+          customClass: {
+            confirmButton: "customButtonSwal",
+          },
+        });
+        setSubmitting(false);
+      } else {
+        setSubmitting(false);
+        Swal.fire({
+          title: "Gagal",
+          text: "Silahkan isi dan pilih opsi yang sudah disediakan di form  ",
+          icon: "error",
+          customClass: {
+            confirmButton: "customButtonSwal",
+          },
+        });
       }
-      Swal.fire({
-        title: "Good job!",
-        text: "You clicked the button!",
-        icon: "success",
-        customClass: {
-          confirmButton: "customButtonSwal",
-        },
-      });
     },
   });
 
@@ -98,6 +113,7 @@ export const useCartProductLogic = () => {
   };
 
   const handleService = async (paramCourier: string) => {
+    setSelectedService(undefined);
     setIsLoadingService(true);
     const totalWeight = dataCart.reduce((accumulator, item) => {
       return accumulator + (item.weight ?? 0) * (item.total ?? 1);
@@ -111,7 +127,7 @@ export const useCartProductLogic = () => {
     setIsLoadingService(false);
   };
 
-  const handleGetDataService = (service: string) => {
+  const handleShowForChooseDataService = (service: string) => {
     const result = resultCourier.find(
       (item: ServiceOption) => item.service === service
     );
@@ -157,7 +173,7 @@ export const useCartProductLogic = () => {
     isLoadingService,
     resultCourier,
     handleService,
-    handleGetDataService,
+    handleShowForChooseDataService,
     totalCost,
     dataCart,
     handleIncrement,

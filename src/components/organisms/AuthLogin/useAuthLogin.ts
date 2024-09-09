@@ -39,18 +39,23 @@ const useAuthLogin = () => {
         .required("Please input the password field"),
     }),
     onSubmit: async (values) => {
-      const process = await handleLogin(values);
-      if (process.status) {
-        if (process?.data?.data?.role === "ADMIN") {
-          toast.error("Please check your account");
-          return navigate("/login", { replace: true });
+      try {
+        const process = await handleLogin(values);
+        if (process.status) {
+          if (process?.data?.data?.role === "ADMIN") {
+            toast.error("Please check your account");
+            return navigate("/masuk", { replace: true });
+          }
+          dispatch(USER_LOGIN(process.data.data));
+          await getListAddresses();
+          toast.success(process.message);
+          navigate("/", { replace: true });
+        } else {
+          toast.error(process.message);
         }
-        dispatch(USER_LOGIN(process.data.data));
-        await getListAddresses();
-        toast.success(process.message);
-        navigate("/", { replace: true });
-      } else {
-        toast.error(process.message);
+      } catch (error: any) {
+        // console.log('error.message', error.message)
+        toast.error("Email/password salah.");
       }
     },
   });

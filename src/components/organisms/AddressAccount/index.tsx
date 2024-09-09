@@ -122,15 +122,20 @@ const AddressAccount: React.FC = () => {
           />
 
           <Button
-            className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
+            className="flex items-center gap-3 mt-6 rounded-md text-white py-3 w-full justify-center"
             type="submit"
-            statusButton="primary"
+            statusButton={formik.isSubmitting ? "disabled" : "primary"}
+            isDisabled={formik.isSubmitting}
           >
-            {isEditMode ? "Perbarui " : "Simpan"}
+            {formik.isSubmitting
+              ? "Loading"
+              : isEditMode
+                ? "Perbarui "
+                : "Simpan"}
           </Button>
           {isEditMode && (
             <Button
-              className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
+              className="flex items-center gap-3 mt-6 rounded-md text-white py-3 w-full justify-center"
               type="button"
               statusButton="danger"
               onClick={() => handleDeleteAddress()}

@@ -1,22 +1,23 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import Loading from "../components/atoms/Loading";
 
-import NotFound from "../pages/NotFound";
-import Home from "../pages/Home";
-import Product from "../pages/Product";
-import Cart from "../pages/Cart";
-import Orders from "../pages/Orders";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
+const Notfound = lazy(() => import("../pages/NotFound"));
+const Home = lazy(() => import("../pages/Home"));
+const Product = lazy(() => import("../pages/Product"));
+const Cart = lazy(() => import("../pages/Cart"));
+const Orders = lazy(() => import("../pages/Orders"));
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
+const Search = lazy(() => import("../pages/Search"));
+const Settings = lazy(() => import("../pages/Settings"));
+
 // import Categories from "../pages/Categories";
 // import Account from "../pages/account";
 import GuestRoute from "./GuestRoute";
 import PrivateRoute from "./PrivateRoute";
-import Search from "../pages/Search";
-import Setttings from "../pages/Settings";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/search/:keyword",
+    path: "/pencarian/:keyword",
     element: (
       <Suspense fallback={<Loading type="xl" />}>
         <Search />
@@ -36,7 +37,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/product/:productId",
+    path: "/produk/:productId",
     element: (
       <Suspense fallback={<Loading type="xl" />}>
         <Product />
@@ -69,7 +70,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/orders",
+        path: "/pesanan",
         element: (
           <Suspense fallback={<Loading type="xl" />}>
             <Orders />
@@ -77,16 +78,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/settings",
+        path: "/pengaturan",
         element: (
           <Suspense fallback={<Loading type="xl" />}>
-            <Setttings />
+            <Settings />
           </Suspense>
         ),
       },
       {
         path: "",
-        element: <Navigate to="/login" replace />,
+        element: <Navigate to="/masuk" replace />,
       },
     ],
   },
@@ -99,7 +100,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "login",
+        path: "masuk",
         element: (
           <Suspense fallback={<Loading type="xl" />}>
             <Login />
@@ -107,7 +108,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "register",
+        path: "daftar",
         element: (
           <Suspense fallback={<Loading type="xl" />}>
             <Register />
@@ -116,7 +117,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <Navigate to="/login" replace />,
+        element: <Navigate to="/masuk" replace />,
       },
     ],
   },
@@ -124,7 +125,7 @@ export const router = createBrowserRouter([
     path: "*",
     element: (
       <Suspense fallback={<Loading type="xl" />}>
-        <NotFound />
+        <Notfound />
       </Suspense>
     ),
   },

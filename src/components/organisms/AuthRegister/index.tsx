@@ -12,7 +12,7 @@ const AuthRegister: React.FC = () => {
       <section className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0">
         <section className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-            Register to your account
+            Daftar Akun
           </h1>
           <form
             className="space-y-4 md:space-y-6"
@@ -68,19 +68,20 @@ const AuthRegister: React.FC = () => {
             />
 
             <Button
-              className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
+              className="flex items-center gap-3 mt-6  rounded-md text-white py-3 w-full justify-center"
               type="submit"
-              statusButton="primary"
+              statusButton={formik.isSubmitting ? "disabled" : "primary"}
+              isDisabled={formik.isSubmitting}
             >
-              Register
+              {formik.isSubmitting ? "Loading" : "Daftar"}
             </Button>
             <p className="text-sm font-light text-gray-500 ">
-              Do you have an account yet?{" "}
+              Apakah kamu sudah punya akun?{" "}
               <Link
-                to="/login"
+                to="/masuk"
                 className="font-medium text-primary-600 hover:underline "
               >
-                Login
+                Masuk
               </Link>
             </p>
           </form>

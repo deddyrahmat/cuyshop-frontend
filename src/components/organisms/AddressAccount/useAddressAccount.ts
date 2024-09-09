@@ -162,7 +162,7 @@ export const useAddressAccount = () => {
       confirmButtonText: "Delete",
       padding: "2em",
       customClass: {
-        popup: "sweet-alerts",
+        confirmButton: "customButtonSwal",
       },
     }).then(async (result) => {
       if (result.isConfirmed) {

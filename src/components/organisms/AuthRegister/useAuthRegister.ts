@@ -31,14 +31,18 @@ const useAuthRegister = () => {
         .required("Please confirm your password"),
     }),
     onSubmit: async (values: ValuesRegister) => {
-      const process = await handleRegister(values);
-      if (!process.status) {
-        toast.error(process.message);
-        return;
+      try {
+        const process = await handleRegister(values);
+        if (!process.status) {
+          toast.error(process.message);
+          return;
+        }
+        dispatch(USER_LOGIN(process.data.data));
+        toast.success(process.message);
+        navigate("/", { replace: true });
+      } catch (error: any) {
+        toast.error(error.message);
       }
-      dispatch(USER_LOGIN(process.data.data));
-      toast.success(process.message);
-      navigate("/", { replace: true });
     },
   });
 

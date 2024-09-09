@@ -42,7 +42,7 @@ const Header: React.FC = () => {
       keyword: Yup.string().max(255, "Maximum 255 characters"),
     }),
     onSubmit: (values) => {
-      navigate(`/search/${values.keyword}`);
+      navigate(`/pencarian/${values.keyword}`);
     },
   });
 
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                   statusButton="link"
                   type="button"
                 >
-                  <span className="ml-3">Home</span>
+                  <span className="ml-3">Beranda</span>
                 </Button>
               </li>
               <li>
@@ -103,22 +103,22 @@ const Header: React.FC = () => {
                 <>
                   <li>
                     <Button
-                      onClick={() => navigate("/login")}
-                      className={`w-full text-left ${isActive("/login") ? "!bg-green-700 text-white" : ""}`}
+                      onClick={() => navigate("/masuk")}
+                      className={`w-full text-left ${isActive("/masuk") ? "!bg-green-700 text-white" : ""}`}
                       statusButton="link"
                       type="button"
                     >
-                      <span className="ml-3">Login</span>
+                      <span className="ml-3">Masuk</span>
                     </Button>
                   </li>
                   <li>
                     <Button
-                      onClick={() => navigate("/register")}
-                      className={`w-full text-left ${isActive("/register") ? "!bg-green-700 text-white" : ""}`}
+                      onClick={() => navigate("/daftar")}
+                      className={`w-full text-left ${isActive("/daftar") ? "!bg-green-700 text-white" : ""}`}
                       statusButton="link"
                       type="button"
                     >
-                      <span className="ml-3">Register</span>
+                      <span className="ml-3">Daftar</span>
                     </Button>
                   </li>
                 </>
@@ -126,22 +126,22 @@ const Header: React.FC = () => {
                 <>
                   <li>
                     <Button
-                      onClick={() => navigate("/orders")}
-                      className={`w-full text-left ${isActive("/orders") ? "!bg-green-700 text-white" : ""}`}
+                      onClick={() => navigate("/pesanan")}
+                      className={`w-full text-left ${isActive("/pesanan") ? "!bg-green-700 text-white" : ""}`}
                       statusButton="link"
                       type="button"
                     >
-                      <span className="ml-3">Orders</span>
+                      <span className="ml-3">Pesanan</span>
                     </Button>
                   </li>
                   <li>
                     <Button
-                      onClick={() => navigate("/settings")}
-                      className={`w-full text-left ${isActive("/settings") ? "!bg-green-700 text-white" : ""}`}
+                      onClick={() => navigate("/pengaturan")}
+                      className={`w-full text-left ${isActive("/pengaturan") ? "!bg-green-700 text-white" : ""}`}
                       statusButton="link"
                       type="button"
                     >
-                      <span className="ml-3">Settings</span>
+                      <span className="ml-3">Pengaturan</span>
                     </Button>
                   </li>
                   <li>
@@ -173,7 +173,7 @@ const Header: React.FC = () => {
                   statusButton="link"
                   type="button"
                 >
-                  Home
+                  Beranda
                 </Button>
               </li>
               <li>
@@ -199,22 +199,22 @@ const Header: React.FC = () => {
                 <>
                   <li>
                     <Button
-                      onClick={() => navigate("/login")}
-                      className={`rounded-lg ${isActive("/login") ? " !text-white !bg-green-700 " : ""}`}
+                      onClick={() => navigate("/masuk")}
+                      className={`rounded-lg ${isActive("/masuk") ? " !text-white !bg-green-700 " : ""}`}
                       type="button"
                       statusButton="link"
                     >
-                      Login
+                      Masuk
                     </Button>
                   </li>
                   <li>
                     <Button
-                      onClick={() => navigate("/register")}
-                      className={`rounded-lg ${isActive("/register") ? " !text-white !bg-green-700 " : ""}`}
+                      onClick={() => navigate("/daftar")}
+                      className={`rounded-lg ${isActive("/daftar") ? " !text-white !bg-green-700 " : ""}`}
                       statusButton="link"
                       type="button"
                     >
-                      Register
+                      Daftar
                     </Button>
                   </li>
                 </>
@@ -222,22 +222,22 @@ const Header: React.FC = () => {
                 <>
                   <li>
                     <Button
-                      onClick={() => navigate("/orders")}
-                      className={`rounded-lg ${isActive("/orders") ? " !text-white !bg-green-700 " : ""}`}
+                      onClick={() => navigate("/pesanan")}
+                      className={`rounded-lg ${isActive("/pesanan") ? " !text-white !bg-green-700 " : ""}`}
                       statusButton="link"
                       type="button"
                     >
-                      Orders
+                      Pesanan
                     </Button>
                   </li>
                   <li>
                     <Button
-                      onClick={() => navigate("/settings")}
-                      className={`rounded-lg ${isActive("/settings") ? " !text-white !bg-green-700 " : ""}`}
+                      onClick={() => navigate("/pengaturan")}
+                      className={`rounded-lg ${isActive("/pengaturan") ? " !text-white !bg-green-700 " : ""}`}
                       statusButton="link"
                       type="button"
                     >
-                      Settings
+                      Pengaturan
                     </Button>
                   </li>
                   <li>

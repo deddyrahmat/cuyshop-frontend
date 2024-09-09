@@ -34,7 +34,7 @@ const CartProduct: React.FC = () => {
     isLoadingService,
     resultCourier,
     handleService,
-    handleGetDataService,
+    handleShowForChooseDataService,
     totalCost,
     dataCart,
     handleIncrement,
@@ -220,7 +220,9 @@ const CartProduct: React.FC = () => {
                                 <section
                                   className={`flex flex-col justify-between h-full p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 cursor-pointer ${formik.values.service === courier.service ? "bg-green-700 text-white" : "bg-white text-gray-700"}`}
                                   onClick={() =>
-                                    handleGetDataService(courier.service)
+                                    handleShowForChooseDataService(
+                                      courier.service
+                                    )
                                   }
                                 >
                                   <div>
@@ -262,14 +264,17 @@ const CartProduct: React.FC = () => {
                   Total Biaya : {formatRupiah(String(totalCost))}
                 </p>
                 <Button
-                  className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
+                  className="flex items-center gap-3 mt-6  rounded-md text-white py-3 w-full justify-center"
                   type="submit"
-                  statusButton="primary"
+                  statusButton={formik.isSubmitting ? "disabled" : "primary"}
+                  isDisabled={formik.isSubmitting}
                 >
                   <span>
                     <IoBagCheckOutline className="text-xl" />
                   </span>
-                  <span className="text-xl">Checkout</span>
+                  <span className="text-xl">
+                    {formik.isSubmitting ? "Loading" : "Checkout"}
+                  </span>
                 </Button>
               </form>
             </section>

@@ -1,30 +1,22 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useAppDispatch } from "../../../redux/hooks";
-import { SET_CARTPAGE } from "../../../redux/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { INCREMENT_ITEM, SET_CARTPAGE } from "../../../redux/cartSlice";
 import { handleDetailProduct } from "../../../services/products";
-import { ImageItem, Product } from "../../../types/containerTypes";
-
-// interface Product {
-//   id: number;
-//   price: number;
-//   title: string;
-//   slug: string;
-//   weight: number;
-//   description: string;
-//   category: { name: string };
-//   product_images: ImageItem[];
-// }
-
-// interface ImageItem {
-//   image: string[];
-//   display_order: number;
-// }
+import {
+  CartSliceType,
+  ImageItem,
+  Product,
+} from "../../../types/containerTypes";
 
 export const useProductDetail = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
+
+  const { data: dataCart } = useAppSelector(
+    (state: { cart: CartSliceType }) => state.cart
+  );
 
   const navigate = useNavigate();
 
@@ -120,7 +112,12 @@ export const useProductDetail = () => {
   }, [product, imageUrl]);
 
   useEffect(() => {
-    if (Object.keys(cartProduct).length > 0) {
+    // Cek apakah produk sudah ada di dalam cart berdasarkan id
+    const existingProduct = dataCart.find((item) => item.id === cartProduct.id);
+
+    if (existingProduct) {
+      dispatch(INCREMENT_ITEM({ id: cartProduct.id }));
+    } else if (Object.keys(cartProduct).length > 0) {
       dispatch(
         SET_CARTPAGE({
           data: cartProduct,

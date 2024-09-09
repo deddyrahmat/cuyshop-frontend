@@ -12,7 +12,7 @@ const AuthLogin: React.FC = () => {
       <section className="w-full bg-white rounded-lg shadow  sm:max-w-md xl:p-0 `` ``">
         <section className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-            Login to your account
+            Masuk ke Aplikasi
           </h1>
           <form
             className="space-y-4 md:space-y-6"
@@ -50,19 +50,20 @@ const AuthLogin: React.FC = () => {
               </a>
             </section> */}
             <Button
-              className="flex items-center gap-3 mt-6 bg-green-600 rounded-md text-white py-3 w-full justify-center"
+              className="flex items-center gap-3 mt-6 rounded-md text-white py-3 w-full justify-center"
               type="submit"
-              statusButton="primary"
+              statusButton={formik.isSubmitting ? "disabled" : "primary"}
+              isDisabled={formik.isSubmitting}
             >
-              Login
+              {formik.isSubmitting ? "Loading" : "Masuk"}
             </Button>
             <p className="text-sm font-light text-gray-500 ">
-              Don’t have an account yet?{" "}
+              Belum punya akun?{" "}
               <Link
-                to="/register"
+                to="/daftar"
                 className="font-medium text-primary-600 hover:underline "
               >
-                Register
+                Daftar
               </Link>
             </p>
           </form>

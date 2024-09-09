@@ -17,9 +17,9 @@ const errorHandler = (error: AxiosError): void => {
         toast.error(responseMessage);
         break;
       case 401:
-        toast.error("Waktu anda habis. Silahkan login ulang");
+        toast.error("Waktu anda habis. Silahkan masuk ulang");
         localStorage.removeItem("auth");
-        window.location.replace("/login");
+        window.location.replace("/masuk");
         break;
       case 403:
         toast.error(responseMessage);
