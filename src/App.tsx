@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <>
       <Provider store={storeRedux}>
-        <RouterProvider router={router} />;
+        <RouterProvider router={router} />
       </Provider>
     </>
   );
