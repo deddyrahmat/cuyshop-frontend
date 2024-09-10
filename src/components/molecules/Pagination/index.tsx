@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <li>
             <button
               onClick={() => onPageChange(currentPage - 1)}
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 "
             >
               Previous
             </button>
@@ -37,7 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 page === currentPage
                   ? "text-white bg-green-400 hover:bg-green-600"
                   : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-              } dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+              } `}
             >
               {page}
             </button>
@@ -47,7 +47,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <li>
             <button
               onClick={() => onPageChange(currentPage + 1)}
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 "
             >
               Next
             </button>

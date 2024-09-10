@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
         <article className=" w-full">
           <h2 className="text-lg lg:text-xl font-bold">Metode Pembayaran</h2>
           <hr className="mt-2 mb-3 border-2 border-gray-300" />
-          <section className="grid grid-cols-3 space-y-3">
+          <section className="grid grid-cols-3 items-center gap-3">
             <div>
               <img
                 src="/image/payments/BCA.png"
