@@ -6,7 +6,8 @@ import {
   SET_PARENTPAGE,
 } from "../../../redux/productSlice";
 import { createSelector } from "reselect";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 // Selectors
 const selectProductData = (state: { product: { data: any } }) =>
@@ -30,6 +31,9 @@ const makeSelectProductData = createSelector(
 export const useProductList = (slug?: string) => {
   const dispatch = useAppDispatch();
   const params = useParams();
+
+  const location = useLocation();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const currentPageName = `${params.slug ?? "home"}_${currentPage}`; // Buat key berdasarkan slug dan halaman
 
@@ -101,6 +105,23 @@ export const useProductList = (slug?: string) => {
     pagination,
     currentPageName,
   ]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const transactionStatus = params.get("transaction_status"); // hanya mengambil transaction_status
+
+    if (transactionStatus === "settlement") {
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Pembayaran Berhasil.",
+        customClass: {
+          confirmButton: "customButtonSwal",
+        },
+      });
+      navigate("/pesanan");
+    }
+  }, [location, navigate]);
 
   return {
     params,
