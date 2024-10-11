@@ -1,30 +1,14 @@
-# React + TypeScript + Vite
+# :bell: Welcome to My project CuyShop :bell:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hello All, My name is Deddy Rahmat <br />
+I am a Frontend Developer
+<br />
 
-Currently, two official plugins are available:
+## About My Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application offers a variety of clothing items such as pants, shirts, and more. It provides multiple payment options, making it easier for customers to complete transactions. The app includes a shipping cost check feature and other functionalities. This application is built using various technologies. The frontend consists of ReactJS, Redux Toolkit, Tailwind CSS, and more.
 
-## Expanding the ESLint configuration
+This repo is about client side for my project <br />
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+you can check for server side Repo :point_right: [Here](https://github.com/deddyrahmat/cuyshop-backend "CuyShop Server side") <br />
+and you can check demo :point_right: [Here](https://youtu.be/VQLmOZ8hwYA "Cuyshop Demo") <br />
